@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="c5f7b77d-88b9-4ecf-a817-61288fb14cb0" name="Default" comment="hope" />
+    <list default="true" id="c5f7b77d-88b9-4ecf-a817-61288fb14cb0" name="Default" comment="hope">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+    </list>
     <ignored path="stmwebapp.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -1036,7 +1038,7 @@
       <workItem from="1447760971128" duration="62000" />
       <workItem from="1455647623454" duration="1903000" />
       <workItem from="1455694860785" duration="1452000" />
-      <workItem from="1455812780180" duration="3080000" />
+      <workItem from="1455812780180" duration="3560000" />
     </task>
     <task id="LOCAL-00001" summary="fisrt">
       <created>1447071278926</created>
@@ -1066,10 +1068,10 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="12640000" />
+    <option name="totallyTimeSpent" value="13120000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="0" width="1924" height="1038" extended-state="1" />
+    <frame x="-8" y="0" width="1924" height="1038" extended-state="0" />
     <editor active="false" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
