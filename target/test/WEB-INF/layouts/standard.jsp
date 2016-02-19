@@ -36,23 +36,14 @@
 		<div id="logo">
 			<p>
 				<a href="<c:url value="/" />">
-					<img src="<c:url value="/resources/images/header.jpg"/>" alt="Spring Travel" />
+					<img src="<c:url value="/resources/images/header.jpg"/>" alt="Spring Travel" class="span-24" />
 				</a>
 			</p>
 		</div>
 	</div>
 	<div id="content">
 		<div id="local" class="span-6">
-			<p>
-				<a href="http://www.thespringexperience.com">
-					<img src="<c:url value="/resources/images/diplomat.jpg"/>" alt="generic hotel" />
-				</a>
-			</p>
-			<p>
-				<a href="http://www.thespringexperience.com">
-					<img src="<c:url value="/resources/images/springone2gx.jpeg"/>" alt="SpringOne 2GX" />
-				</a>
-			</p>
+			<tiles:insertAttribute name="menu" />
 		</div>
 		<div id="main" class="span-18 last">
 			<tiles:insertAttribute name="body" />
@@ -60,9 +51,7 @@
 	</div>
 	<hr />
 	<div id="footer">
-		<a href="http://www.springframework.org">
-			<img src="<c:url value="/resources/images/powered-by-spring.png"/>" alt="Powered by Spring" />
-		</a>
+		<small>© Copyright 2016, Michaela Zaťková</small>
 	</div>
 </div>
 </body>

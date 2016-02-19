@@ -7,6 +7,7 @@
 	
 	<definition name="home" extends="standardLayout">
 		<put-attribute name="body" value="/WEB-INF/views/home.jsp" />
+		<put-attribute name="menu" value="/WEB-INF/views/menu.jsp" />
 	</definition>
 		
 </tiles-definitions>
