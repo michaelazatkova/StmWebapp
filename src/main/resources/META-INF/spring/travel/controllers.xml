@@ -20,6 +20,6 @@
 
 	
 	<!-- Scans for annotated @Controllers in the classpath -->
-	<!--<context:component-scan base-package="org.springframework.samples.travel" />-->
+	<context:component-scan base-package="com.projects.savethemeeting.controller" />
 	 
 </beans>
