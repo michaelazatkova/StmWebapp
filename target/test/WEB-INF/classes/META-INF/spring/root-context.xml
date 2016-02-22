@@ -11,6 +11,6 @@
 	<import resource="data.xml" />
 	
 	<!-- Configures shared security layer -->
-	<import resource="security.xml" />
+	<!--<import resource="security.xml" />-->
 	
 </beans>

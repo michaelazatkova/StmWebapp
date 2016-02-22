@@ -20,21 +20,24 @@ public class RestApiController {
     }
 
     @RequestMapping(value="/upload", method= RequestMethod.POST)
-    public @ResponseBody String handleFileUpload(@RequestParam("file") MultipartFile file){
+    public @ResponseBody Boolean handleFileUpload(@RequestParam("file") MultipartFile file){
         if (!file.isEmpty()) {
-            String name = new File(".").getAbsolutePath()+File.separator+file.getName();
+            String name = System.getProperty("user.home") +File.separator + file.getOriginalFilename();
             try {
                 byte[] bytes = file.getBytes();
                 BufferedOutputStream stream =
                         new BufferedOutputStream(new FileOutputStream(new File(name)));
                 stream.write(bytes);
                 stream.close();
-                return "You successfully uploaded " + name + "!";
+                System.out.println("You successfully uploaded " + name + "!");
+                return true;
             } catch (Exception e) {
-                return "You failed to upload " + name + " => " + e.getMessage();
+                System.out.println("You failed to upload " + name + " => " + e.getMessage());
+                return false;
             }
         } else {
-            return "You failed to upload file because the file was empty.";
+            System.out.println("You failed to upload file because the file was empty.");
+            return false;
         }
     }
 }

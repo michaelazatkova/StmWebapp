@@ -10,6 +10,7 @@
 		
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 
+
 	<!-- Configures the Spring MVC @Controller programming model -->
 	<annotation-driven />
 
@@ -18,7 +19,9 @@
 	
 	<!-- Configures a handler for serving static resources by forwarding to the Servlet container's default Servlet. -->
 	<default-servlet-handler />
-	
+
+	<beans:bean id="multipartResolver"
+		  class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
 	<!-- Maps view names to Tiles Definitions with support for partial re-rendering -->
 	<beans:bean id="viewResolver" class="org.springframework.js.ajax.AjaxUrlBasedViewResolver">
 		<beans:property name="viewClass" value="org.springframework.webflow.mvc.view.FlowAjaxTilesView"/>

@@ -22,7 +22,7 @@
 		</property>
 	</bean>
 
-	
+
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
 		<property name="driverClassName" value="org.postgresql.Driver"></property>
 		<!--<property name="username" value="${OPENSHIFT_POSTGRESQL_DB_USERNAME}"></property>-->

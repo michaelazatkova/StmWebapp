@@ -25,20 +25,20 @@
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 
-	<!-- Secures the application -->
-	<filter>
-		<filter-name>springSecurity</filter-name>
-		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
-		<init-param>
-			<param-name>targetBeanName</param-name>
-			<param-value>springSecurityFilterChain</param-value>
-		</init-param>
-	</filter>
+	<!--&lt;!&ndash; Secures the application &ndash;&gt;-->
+	<!--<filter>-->
+		<!--<filter-name>springSecurity</filter-name>-->
+		<!--<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>-->
+		<!--<init-param>-->
+			<!--<param-name>targetBeanName</param-name>-->
+			<!--<param-value>springSecurityFilterChain</param-value>-->
+		<!--</init-param>-->
+	<!--</filter>-->
 
-	<filter-mapping>
-		<filter-name>springSecurity</filter-name>
-		<url-pattern>/*</url-pattern>
-	</filter-mapping>
+	<!--<filter-mapping>-->
+		<!--<filter-name>springSecurity</filter-name>-->
+		<!--<url-pattern>/*</url-pattern>-->
+	<!--</filter-mapping>-->
 
 	<!-- Handles all requests into the application -->
 	<servlet>
