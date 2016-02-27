@@ -1,5 +1,7 @@
 package com.projects.savethemeeting.controller;
 
+import com.projects.savethemeeting.dao.MeetingDao;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -14,13 +16,16 @@ import java.io.FileOutputStream;
 @RequestMapping("/api")
 public class RestApiController {
 
+    @Autowired
+    private MeetingDao meetingDao;
+
     @RequestMapping("/skuska")
     public @ResponseBody String skuska(@RequestParam(value = "param") String param) {
         return param+ "-checked";
     }
 
     @RequestMapping(value="/upload", method= RequestMethod.POST)
-    public @ResponseBody Boolean handleFileUpload(@RequestParam("file") MultipartFile file){
+    public @ResponseBody String handleFileUpload(@RequestParam("file") MultipartFile file){
         if (!file.isEmpty()) {
             String name = System.getProperty("user.home") +File.separator + file.getOriginalFilename();
             try {
@@ -30,14 +35,21 @@ public class RestApiController {
                 stream.write(bytes);
                 stream.close();
                 System.out.println("You successfully uploaded " + name + "!");
-                return true;
+                return "OK";
             } catch (Exception e) {
                 System.out.println("You failed to upload " + name + " => " + e.getMessage());
-                return false;
+                return "FAILED";
             }
         } else {
             System.out.println("You failed to upload file because the file was empty.");
-            return false;
+            return "FAILED";
         }
+    }
+
+    @RequestMapping("/test")
+    public String createTestData() {
+        meetingDao.storeData();
+
+        return "redirect:/";
     }
 }
