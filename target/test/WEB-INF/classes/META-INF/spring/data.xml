@@ -50,14 +50,19 @@
 		</property>
 		<property name="annotatedClasses">
 			<list>
-				<value>com.projects.savethemeeting.objectmodel.Meeting</value>
 				<value>com.projects.savethemeeting.objectmodel.User</value>
+				<value>com.projects.savethemeeting.objectmodel.UserOnMeeting</value>
+				<value>com.projects.savethemeeting.objectmodel.Meeting</value>
 				<value>com.projects.savethemeeting.objectmodel.Record</value>
 			</list>
 		</property>
 	</bean>
 
 	<bean id="meetingDao" class="com.projects.savethemeeting.dao.MeetingDao">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+
+	<bean id="userDao" class="com.projects.savethemeeting.dao.UserDao">
 		<property name="sessionFactory" ref="sessionFactory"/>
 	</bean>
 

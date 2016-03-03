@@ -7,12 +7,14 @@
       <provider>org.hibernate.ejb.HibernatePersistence</provider>
 
        <class>com.projects.savethemeeting.objectmodel.User</class>
+       <class>com.projects.savethemeeting.objectmodel.UserOnMeeting</class>
        <class>com.projects.savethemeeting.objectmodel.Meeting</class>
        <class>com.projects.savethemeeting.objectmodel.Record</class>
+
        <!--<class>com.projects.savethemeeting.objectmodel.UserOnMeeting</class>-->
       <properties>
       	 <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
-      	 <property name="hibernate.hbm2ddl.auto" value="update" />
+      	 <property name="hibernate.hbm2ddl.auto" value="create" />
          <property name="hibernate.show_sql" value="true"/>
 
       </properties>

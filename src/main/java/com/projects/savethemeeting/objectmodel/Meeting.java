@@ -1,34 +1,35 @@
 package com.projects.savethemeeting.objectmodel;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Michaela on 24.02.2016.
  */
 @Entity
-@Table(name="meeting",schema = "public")
-public class Meeting {
-    @Id
-    @Column(name="id_meeting")
-    @GeneratedValue
-    private long idMeeting;
+@Table(name = "meeting", schema = "public")
+public class Meeting implements Serializable{
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name = "users", joinColumns = {
-            @JoinColumn(name = "id_user", nullable = false)
-    }, inverseJoinColumns = { @JoinColumn(name = "id_meeting")})
-    private List<User> users;
+    private static final long serialVersionUID = 498932459446755089L;
+
+    @Id
+    @Column(name = "id_meeting", unique = true, nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long idMeeting;
 
     @Column
     private String name;
-
     @Column
     private Date started;
-
     @Column
     private long duration;
+
+    @OneToMany(mappedBy = "meeting")
+    private List<UserOnMeeting> users = new ArrayList<UserOnMeeting>();
+
 
     public long getIdMeeting() {
         return idMeeting;
@@ -37,6 +38,7 @@ public class Meeting {
     public void setIdMeeting(long id) {
         this.idMeeting = id;
     }
+
 
     public String getName() {
         return name;
@@ -62,11 +64,11 @@ public class Meeting {
         this.duration = duration;
     }
 
-    public List<User> getUsers() {
+    public List<UserOnMeeting> getUsers() {
         return users;
     }
 
-    public void setUsers(List<User> users) {
+    public void setUsers(List<UserOnMeeting> users) {
         this.users = users;
     }
 }

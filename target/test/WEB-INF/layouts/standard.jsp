@@ -19,14 +19,26 @@
 			redirect_uri: 'http://example.com/callback'
 		});
 	</script>
-	<script type="text/javascript">
-		soundcloud.addEventListener('onPlayerReady', function(player, data) {
-			player.api_play();
-		});
-	</script>
+
 </head>
 <body class="tundra">
+<script>
+	window.fbAsyncInit = function() {
+		FB.init({
+			appId      : '1729291490636063',
+			xfbml      : true,
+			version    : 'v2.5'
+		});
+	};
 
+	(function(d, s, id){
+		var js, fjs = d.getElementsByTagName(s)[0];
+		if (d.getElementById(id)) {return;}
+		js = d.createElement(s); js.id = id;
+		js.src = "//connect.facebook.net/en_US/sdk.js";
+		fjs.parentNode.insertBefore(js, fjs);
+	}(document, 'script', 'facebook-jssdk'));
+</script>
 <%--<p>soundloud user: User 790524602--%>
 	<%--client id: cb5ef3b1acde0f9998eafecfb2356678--%>
 	<%--client secret: 598edc71dc99298c8c25c65a9d2f3b8a--%>
@@ -51,14 +63,34 @@
 	<div id="content">
 		<div id="local" class="span-6">
 			<tiles:insertAttribute name="menu" />
-			<object height="81" width="100%" id="cb5ef3b1acde0f9998eafecfb2356678" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000">
-				<param name="movie" value="http://player.soundcloud.com/player.swf?url=http%3A%2F%2Fsoundcloud.com%2Fmatas%2Fhobnotropic&enable_api=true&object_id=cb5ef3b1acde0f9998eafecfb2356678"></param>
-				<param name="allowscriptaccess" value="always"></param>
-				<embed allowscriptaccess="always" height="81" src="http://player.soundcloud.com/player.swf?url=http%3A%2F%2Fsoundcloud.com%2Fmatas%2Fhobnotropic&enable_api=true&object_id=cb5ef3b1acde0f9998eafecfb2356678" type="application/x-shockwave-flash" width="100%" name="cb5ef3b1acde0f9998eafecfb2356678"></embed>
-			</object>
+			<div
+					class="fb-like"
+					data-share="true"
+					data-width="450"
+					data-show-faces="true">
+			</div>
 		</div>
 		<div id="main" class="span-18 last">
 			<tiles:insertAttribute name="body" />
+			<%--<script type="text/javascript">--%>
+				<%--(function(){--%>
+					<%--var widgetIframe = document.getElementById('sc-widget'),--%>
+							<%--widget       = SC.Widget(widgetIframe),--%>
+							<%--newSoundUrl = 'http://api.soundcloud.com/tracks/13692671';--%>
+
+					<%--widget.bind(SC.Widget.Events.READY, function() {--%>
+						<%--// load new widget--%>
+						<%--widget.bind(SC.Widget.Events.FINISH, function() {--%>
+							<%--widget.load(newSoundUrl, {--%>
+								<%--show_artwork: false--%>
+							<%--});--%>
+						<%--});--%>
+					<%--});--%>
+
+				<%--}());--%>
+			<%--</script>--%>
+			<iframe class="iframe" width="100%" height="465" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=http://api.soundcloud.com/users/790524602/favorites">
+			</iframe>
 		</div>
 	</div>
 	<hr />

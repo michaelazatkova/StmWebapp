@@ -1,28 +1,39 @@
 package com.projects.savethemeeting.objectmodel;
 
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Michaela on 24.02.2016.
  */
 @Entity
-@Table(name="users",schema = "public")
-public class User {
+@Table(name = "users", schema = "public")
+public class User implements Serializable {
+
+    private static final long serialVersionUID = -4619148560389902972L;
 
     @Id
-    @Column(name="id_user")
-    @GeneratedValue
+    @Column(name = "id_user")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long userId;
-
-    @ManyToMany(mappedBy = "users", fetch = FetchType.LAZY)
-    private List<Meeting> meetings;
 
     @Column
     private String name;
-
     @Column
     private String email;
+
+    @OneToMany(mappedBy = "user")
+    private List<UserOnMeeting> meetings = new ArrayList<UserOnMeeting>();
+
+    public User() {
+    }
+
+    public User(String name, String email) {
+        this.name = name;
+        this.email = email;
+    }
 
     public long getUserId() {
         return userId;
@@ -40,6 +51,7 @@ public class User {
         this.name = name;
     }
 
+
     public String getEmail() {
         return email;
     }
@@ -48,11 +60,11 @@ public class User {
         this.email = email;
     }
 
-    public List<Meeting> getMeetings() {
+    public List<UserOnMeeting> getMeetings() {
         return meetings;
     }
 
-    public void setMeetings(List<Meeting> meetings) {
+    public void setMeetings(List<UserOnMeeting> meetings) {
         this.meetings = meetings;
     }
 }
