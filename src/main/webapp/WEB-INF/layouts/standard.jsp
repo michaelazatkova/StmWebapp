@@ -55,7 +55,7 @@
 		<div id="logo">
 			<p>
 				<a href="<c:url value="/" />">
-					<img src="<c:url value="/resources/images/header_picture.jpg"/>" alt="Spring Travel" class="span-24" />
+					<img src="<c:url value="/resources/images/header_picture.jpg"/>" alt="Save the meeting" class="span-24" />
 				</a>
 			</p>
 		</div>

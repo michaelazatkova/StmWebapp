@@ -42,17 +42,17 @@
 
 	<!-- Handles all requests into the application -->
 	<servlet>
-		<servlet-name>travel</servlet-name>
+		<servlet-name>savethemeeting</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
 		<init-param>
 			<param-name>contextConfigLocation</param-name>
-			<param-value>classpath:/META-INF/spring/travel/servlet-context.xml</param-value>
+			<param-value>classpath:/META-INF/spring/stm/servlet-context.xml</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 
 	<servlet-mapping>
-		<servlet-name>travel</servlet-name>
+		<servlet-name>savethemeeting</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 
