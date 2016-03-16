@@ -1,9 +1,7 @@
 package com.projects.savethemeeting.controller;
 
-import com.projects.savethemeeting.dao.MeetingDao;
-import com.projects.savethemeeting.dao.UserDao;
-import com.projects.savethemeeting.objectmodel.User;
-import com.projects.savethemeeting.objectmodel.UserOnMeeting;
+import com.projects.savethemeeting.dao.*;
+import com.projects.savethemeeting.objectmodel.*;
 import com.projects.savethemeeting.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,6 +13,7 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.sql.Date;
+import java.util.List;
 
 /**
  * Created by Michaela on 22.02.2016.
@@ -27,10 +26,41 @@ public class RestApiController {
     private MeetingDao meetingDao;
     @Autowired
     private UserDao userDao;
+    @Autowired
+    private RecordDao recordDao;
+    @Autowired
+    private POIDao pointOfInterestDao;
+    @Autowired
+    private UOMDao userOnMeetingDao;
 
     @RequestMapping(value="/meeting",method = RequestMethod.POST,consumes="application/json" )
-    public @ResponseBody ResponseEntity<String> createMeeting(@RequestBody Meeting meeting){
-        System.out.println(meeting.getMeetingName()); //todo: save meeting to database
+    public @ResponseBody ResponseEntity<String> createMeeting(@RequestBody MeetingInfo meeting){
+        System.out.println(meeting.getMeetingName());
+        Meeting newMeeting = new Meeting(meeting);
+        Record record = new Record(Constants.PATH_FOR_RECORDS+meeting.getIdentificator()+".amr");
+        User user = meeting.getUser();
+        List<PointOfInterest> pois = meeting.getPointsOfInterest();
+        UserOnMeeting userOnMeeting = new UserOnMeeting(user,newMeeting,new Date(Date.parse(meeting.getConnectedFrom())),new Date(Date.parse(meeting.getConnectedTo())),record,pois);
+        newMeeting.getUsers().add(userOnMeeting);
+        user.getMeetings().add(userOnMeeting);
+        for (PointOfInterest poi : pois) {
+            poi.setUserOnMeeting(userOnMeeting);
+        }
+
+        if (!userDao.entityExists(user)) {
+            userDao.persist(user);
+        }
+        if (!meetingDao.entityExists(newMeeting)) {
+            meetingDao.persist(newMeeting);
+        }
+        meetingDao.openCurrentSessionwithTransaction();
+        recordDao.persist(record);
+        for (PointOfInterest poi : pois) {
+            pointOfInterestDao.persist(poi);
+        }
+        userOnMeetingDao.persist(userOnMeeting);
+        meetingDao.closeCurrentSessionwithTransaction();
+
         return new ResponseEntity<String>("{}", HttpStatus.CREATED);
     }
 
@@ -56,29 +86,10 @@ public class RestApiController {
         }
     }
 
-    @RequestMapping("/test")
-    public String createTestData() {
-        com.projects.savethemeeting.objectmodel.Meeting meeting = new com.projects.savethemeeting.objectmodel.Meeting();
-        meeting.setName("test");
-        meeting.setStarted(new Date(System.currentTimeMillis()-20000));
-        meeting.setDuration(20L*60L*1000L);
-        User janko = new User("Jano","jano@mail.com");
-        UserOnMeeting userOnMeeting = new UserOnMeeting();
-        userOnMeeting.setFrom(meeting.getStarted());
-        userOnMeeting.setTo(new Date(System.currentTimeMillis()));
+    @RequestMapping(value="/skuska",method = RequestMethod.GET)
+    public void skuska() {
+    Meeting lastMeeting = meetingDao.getLastMeeting();
+        List<UserOnMeeting> users = userOnMeetingDao.getUsersOnMeeting(lastMeeting);
 
-        janko.getMeetings().add(userOnMeeting);
-        userOnMeeting.setUser(janko);
-
-        meeting.getUsers().add(userOnMeeting);
-        userOnMeeting.setMeeting(meeting);
-
-        meetingDao.openCurrentSessionwithTransaction();
-        meetingDao.getCurrentSession().save(janko);
-        meetingDao.getCurrentSession().save(meeting);
-        meetingDao.getCurrentSession().save(userOnMeeting);
-        meetingDao.closeCurrentSessionwithTransaction();
-
-        return "redirect:/";
     }
 }

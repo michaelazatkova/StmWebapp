@@ -10,7 +10,19 @@ public class UserDao extends  BaseDao<User> {
     @Override
     public void persist(User entity) {
         openCurrentSessionwithTransaction();
-        getCurrentSession().save(entity);
+        super.persist(entity);
         closeCurrentSessionwithTransaction();
+    }
+
+    @Override
+    public boolean entityExists(User user) {
+        boolean result = false;
+        openCurrentSessionwithTransaction();
+        User found = (User)getCurrentSession().get(User.class,user.getFbID());
+        if (found!=null) {
+            result = true;
+        }
+        closeCurrentSessionwithTransaction();
+         return result;
     }
 }

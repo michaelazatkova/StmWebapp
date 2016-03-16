@@ -1,5 +1,7 @@
 package com.projects.savethemeeting.objectmodel;
 
+import com.projects.savethemeeting.controller.MeetingInfo;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Date;
@@ -15,9 +17,18 @@ public class Meeting implements Serializable{
 
     private static final long serialVersionUID = 498932459446755089L;
 
+    public Meeting(MeetingInfo meetingInfo) {
+        this.idMeeting = Long.parseLong(meetingInfo.getIdentificator());
+        this.name = meetingInfo.getMeetingName();
+        this.started = new Date(Date.parse(meetingInfo.getStarted()));
+        this.duration = meetingInfo.getDuration();
+    }
+
+    public Meeting() {
+    }
+
     @Id
     @Column(name = "id_meeting", unique = true, nullable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idMeeting;
 
     @Column
@@ -70,5 +81,21 @@ public class Meeting implements Serializable{
 
     public void setUsers(List<UserOnMeeting> users) {
         this.users = users;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Meeting)) return false;
+
+        Meeting meeting = (Meeting) o;
+
+        return idMeeting == meeting.idMeeting;
+
+    }
+
+    @Override
+    public int hashCode() {
+        return (int) (idMeeting ^ (idMeeting >>> 32));
     }
 }

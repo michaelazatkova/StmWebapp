@@ -6,8 +6,8 @@
 <tiles-definitions>
 	
 	<definition name="home" extends="standardLayout">
-		<put-attribute name="body" value="/WEB-INF/views/home.jsp" />
-		<put-attribute name="menu" value="/WEB-INF/views/menu.jsp" />
+		<put-attribute name="last" value="/WEB-INF/views/last.jsp" />
+		<put-attribute name="meetinglist" value="/WEB-INF/views/meetinglist.jsp" />
 	</definition>
 		
 </tiles-definitions>

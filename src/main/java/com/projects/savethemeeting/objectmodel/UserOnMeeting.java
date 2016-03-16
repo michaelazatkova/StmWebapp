@@ -3,6 +3,8 @@ package com.projects.savethemeeting.objectmodel;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Michaela on 28.02.2016.
@@ -11,7 +13,8 @@ import java.sql.Date;
 @Table(name = "user_meeting", schema = "public")
 public class UserOnMeeting implements Serializable {
 
-    private static final long serialVersionUID = -3948218176035998913L;
+
+    private static final long serialVersionUID = -2512843611208620141L;
     @Id
     @ManyToOne
     @JoinColumn(name = "id_user")
@@ -31,6 +34,21 @@ public class UserOnMeeting implements Serializable {
     @OneToOne
     @JoinColumn(name = "id_record")
     private Record record;
+
+    @OneToMany( mappedBy="userOnMeeting", fetch = FetchType.EAGER)
+    public List<PointOfInterest> pointsOfIterest; //unidirectional
+
+    public UserOnMeeting(User user,Meeting meeting, Date from, Date to, Record record,List<PointOfInterest> pointsOfIterest) {
+        this.meeting = meeting;
+        this.from = from;
+        this.to = to;
+        this.record = record;
+        this.user = user;
+        this.pointsOfIterest = pointsOfIterest;
+    }
+
+    public UserOnMeeting() {
+    }
 
     public Meeting getMeeting() {
         return meeting;
@@ -62,5 +80,32 @@ public class UserOnMeeting implements Serializable {
 
     public void setTo(Date to) {
         this.to = to;
+    }
+
+    public void setRecord(Record record) {
+        this.record = record;
+    }
+
+    public void setPointsOfIterest(List<PointOfInterest> pointsOfIterest) {
+        this.pointsOfIterest = pointsOfIterest;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof UserOnMeeting)) return false;
+
+        UserOnMeeting that = (UserOnMeeting) o;
+
+        if (!user.equals(that.user)) return false;
+        return meeting.equals(that.meeting);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = user.hashCode();
+        result = 31 * result + meeting.hashCode();
+        return result;
     }
 }

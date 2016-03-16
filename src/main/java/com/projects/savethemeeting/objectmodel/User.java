@@ -16,8 +16,7 @@ public class User implements Serializable {
 
     @Id
     @Column(name = "id_user")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long userId;
+    private long fbID;
 
     @Column
     private String name;
@@ -35,12 +34,12 @@ public class User implements Serializable {
         this.email = email;
     }
 
-    public long getUserId() {
-        return userId;
+    public long getFbID() {
+        return fbID;
     }
 
-    public void setUserId(long id) {
-        this.userId = id;
+    public void setFbID(long id) {
+        this.fbID = id;
     }
 
     public String getName() {
@@ -66,5 +65,22 @@ public class User implements Serializable {
 
     public void setMeetings(List<UserOnMeeting> meetings) {
         this.meetings = meetings;
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User)) return false;
+
+        User user = (User) o;
+
+        return fbID == user.fbID;
+
+    }
+
+    @Override
+    public int hashCode() {
+        return (int) (fbID ^ (fbID >>> 32));
     }
 }

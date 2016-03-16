@@ -54,6 +54,7 @@
 				<value>com.projects.savethemeeting.objectmodel.UserOnMeeting</value>
 				<value>com.projects.savethemeeting.objectmodel.Meeting</value>
 				<value>com.projects.savethemeeting.objectmodel.Record</value>
+				<value>com.projects.savethemeeting.objectmodel.PointOfInterest</value>
 			</list>
 		</property>
 	</bean>
@@ -65,6 +66,21 @@
 	<bean id="userDao" class="com.projects.savethemeeting.dao.UserDao">
 		<property name="sessionFactory" ref="sessionFactory"/>
 	</bean>
+
+	<bean id="recordDao" class="com.projects.savethemeeting.dao.RecordDao">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+
+	<bean id="userOnMeetingDao" class="com.projects.savethemeeting.dao.UOMDao">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+
+	<bean id="pointOfInterestDao" class="com.projects.savethemeeting.dao.POIDao">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+
+
+
 
 	<tx:advice id="txAdvice" transaction-manager="transactionManager">
 		<tx:attributes>

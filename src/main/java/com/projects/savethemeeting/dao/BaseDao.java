@@ -50,5 +50,12 @@ public abstract class BaseDao<T> extends HibernateDaoSupport {
         this.currentTransaction = currentTransaction;
     }
 
-    public abstract void persist(T entity);
+    public void persist(T entity) {
+        //openCurrentSessionwithTransaction();
+        getCurrentSession().save(entity);
+        //closeCurrentSessionwithTransaction();
+    };
+
+    public abstract boolean entityExists(T entity);
+
 }

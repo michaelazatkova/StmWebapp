@@ -12,9 +12,7 @@
 	<mvc:view-controller path="/" view-name="home"/>
 
 	<!-- Maps '/users/login' requests to the 'users/login' view -->
-	<mvc:view-controller path="/users/login" />
-	<mvc:view-controller path="/users/logout" />
-	<mvc:view-controller path="/users/logoutSuccess" />
+	<mvc:view-controller path="/last"></mvc:view-controller>
 
 	<!-- Handler for executions of the 'hotels/booking' flow -->
 

@@ -5,10 +5,20 @@ package com.projects.savethemeeting.objectmodel;
  */
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name="record",schema = "public")
-public class Record {
+public class Record implements Serializable{
+
+    private static final long serialVersionUID = -948760539653304945L;
+
+    public Record(String path) {
+        this.path = path;
+    }
+
+    public Record() {
+    }
 
     @Id
     @Column(name="id_record")
@@ -17,4 +27,20 @@ public class Record {
 
     @Column
     private String path;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
 }
