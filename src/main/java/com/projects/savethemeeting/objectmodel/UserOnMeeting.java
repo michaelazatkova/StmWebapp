@@ -3,6 +3,7 @@ package com.projects.savethemeeting.objectmodel;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Set;
 
@@ -26,19 +27,19 @@ public class UserOnMeeting implements Serializable {
     private Meeting meeting;
 
     @Column(name = "participate_from")
-    private Date from;
+    private Timestamp from;
 
     @Column(name = "participate_to")
-    private Date to;
+    private Timestamp to;
 
     @OneToOne
     @JoinColumn(name = "id_record")
     private Record record;
 
-    @OneToMany( mappedBy="userOnMeeting", fetch = FetchType.EAGER)
+    @OneToMany( mappedBy="userOnMeeting")
     public List<PointOfInterest> pointsOfIterest; //unidirectional
 
-    public UserOnMeeting(User user,Meeting meeting, Date from, Date to, Record record,List<PointOfInterest> pointsOfIterest) {
+    public UserOnMeeting(User user,Meeting meeting, Timestamp from, Timestamp to, Record record,List<PointOfInterest> pointsOfIterest) {
         this.meeting = meeting;
         this.from = from;
         this.to = to;
@@ -66,20 +67,28 @@ public class UserOnMeeting implements Serializable {
         this.user = user;
     }
 
-    public Date getFrom() {
+    public Timestamp getFrom() {
         return from;
     }
 
-    public void setFrom(Date from) {
+    public void setFrom(Timestamp from) {
         this.from = from;
     }
 
-    public Date getTo() {
+    public Timestamp getTo() {
         return to;
     }
 
-    public void setTo(Date to) {
+    public void setTo(Timestamp to) {
         this.to = to;
+    }
+
+    public Record getRecord() {
+        return record;
+    }
+
+    public List<PointOfInterest> getPointsOfIterest() {
+        return pointsOfIterest;
     }
 
     public void setRecord(Record record) {

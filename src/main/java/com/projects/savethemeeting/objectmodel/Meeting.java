@@ -5,6 +5,7 @@ import com.projects.savethemeeting.controller.MeetingInfo;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +21,7 @@ public class Meeting implements Serializable{
     public Meeting(MeetingInfo meetingInfo) {
         this.idMeeting = Long.parseLong(meetingInfo.getIdentificator());
         this.name = meetingInfo.getMeetingName();
-        this.started = new Date(Date.parse(meetingInfo.getStarted()));
+        this.started = new Timestamp(Timestamp.parse(meetingInfo.getStarted()));
         this.duration = meetingInfo.getDuration();
     }
 
@@ -34,7 +35,7 @@ public class Meeting implements Serializable{
     @Column
     private String name;
     @Column
-    private Date started;
+    private Timestamp started;
     @Column
     private long duration;
 
@@ -59,11 +60,11 @@ public class Meeting implements Serializable{
         this.name = name;
     }
 
-    public Date getStarted() {
+    public Timestamp getStarted() {
         return started;
     }
 
-    public void setStarted(Date started) {
+    public void setStarted(Timestamp started) {
         this.started = started;
     }
 

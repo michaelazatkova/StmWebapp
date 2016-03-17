@@ -13,6 +13,7 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.List;
 
 /**
@@ -37,10 +38,10 @@ public class RestApiController {
     public @ResponseBody ResponseEntity<String> createMeeting(@RequestBody MeetingInfo meeting){
         System.out.println(meeting.getMeetingName());
         Meeting newMeeting = new Meeting(meeting);
-        Record record = new Record(Constants.PATH_FOR_RECORDS+meeting.getIdentificator()+".amr");
         User user = meeting.getUser();
+        Record record = new Record(Constants.PATH_FOR_RECORDS+meeting.getIdentificator() + File.separator+ user.getFbID() +".amr");
         List<PointOfInterest> pois = meeting.getPointsOfInterest();
-        UserOnMeeting userOnMeeting = new UserOnMeeting(user,newMeeting,new Date(Date.parse(meeting.getConnectedFrom())),new Date(Date.parse(meeting.getConnectedTo())),record,pois);
+        UserOnMeeting userOnMeeting = new UserOnMeeting(user,newMeeting,new Timestamp(Timestamp.parse(meeting.getConnectedFrom())),new Timestamp(Timestamp.parse(meeting.getConnectedTo())),record,pois);
         newMeeting.getUsers().add(userOnMeeting);
         user.getMeetings().add(userOnMeeting);
         for (PointOfInterest poi : pois) {
@@ -65,13 +66,16 @@ public class RestApiController {
     }
 
     @RequestMapping(value="/upload", method= RequestMethod.POST)
-    public @ResponseBody String handleFileUpload(@RequestParam("file") MultipartFile file){
+    public @ResponseBody String handleFileUpload(@RequestParam("file") MultipartFile file, @RequestParam("user") String userID){
         if (!file.isEmpty()) {
-            String name = Constants.PATH_FOR_RECORDS + file.getOriginalFilename();
+            String recordName = file.getOriginalFilename().substring(0,file.getOriginalFilename().lastIndexOf("."));
+            String name = Constants.PATH_FOR_RECORDS + recordName + File.separator + userID + ".amr";
+            File record = new File(name);
+            record.getParentFile().mkdirs();
             try {
                 byte[] bytes = file.getBytes();
                 BufferedOutputStream stream =
-                        new BufferedOutputStream(new FileOutputStream(new File(name)));
+                        new BufferedOutputStream(new FileOutputStream(record));
                 stream.write(bytes);
                 stream.close();
                 System.out.println("You successfully uploaded " + name + "!");
@@ -89,7 +93,7 @@ public class RestApiController {
     @RequestMapping(value="/skuska",method = RequestMethod.GET)
     public void skuska() {
     Meeting lastMeeting = meetingDao.getLastMeeting();
-        List<UserOnMeeting> users = userOnMeetingDao.getUsersOnMeeting(lastMeeting);
+        List<User> users = userDao.getUsers(lastMeeting);
 
     }
 }
