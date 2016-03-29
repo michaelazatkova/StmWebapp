@@ -4,8 +4,9 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 
-<jsp:useBean id="lastSession" class="com.projects.savethemeeting.objectmodel.Meeting" scope="request"/>
+<jsp:useBean id="lastMeeting" class="com.projects.savethemeeting.objectmodel.Meeting" scope="request"/>
 <jsp:useBean id="participants" type="java.util.List" class="java.util.ArrayList" scope="request"/>
+<jsp:useBean id="lastMeetings" type="java.util.List" scope="request"/>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -67,16 +68,16 @@
 
 <nav class="teal" role="navigation">
     <div class="nav-wrapper">
-        <a id="logo-container" href="#" class="brand-logo">Save the meeting</a>
+        <a id="logo-container" href="/" class="brand-logo">Save the meeting</a>
         <ul class="right hide-on-med-and-down">
             <li><a href="<c:url value="/"/>" class="white-text"><i class="material-icons left">library_books</i>My
                 meeting reports</a></li>
         </ul>
 
         <ul id="nav-mobile" class="side-nav">
-            <li><a href="<c:url value="/"/>" class="white-text">My meeting reports</a></li>
+            <li><a href="/reports" class="white-text">My meeting reports</a></li>
         </ul>
-        <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+        <a href="/reports" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
     </div>
 </nav>
 
@@ -113,7 +114,7 @@
             <div class="col s12 m6">
                 <div class="icon-block grey lighten-4">
                     <h2 class="center black-text margin1"><i class="material-icons">view_list</i></h2>
-                    <p class="light"><t:meetingList/></p>
+                    <p class="light"><t:meetingList lastMeetings="${lastMeetings}"/></p>
                 </div>
             </div>
         </div>

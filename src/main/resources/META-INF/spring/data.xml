@@ -63,6 +63,13 @@
 		<property name="sessionFactory" ref="sessionFactory"/>
 	</bean>
 
+	<bean id="soundCloudUtils" class="com.projects.savethemeeting.sound.upload.SoundCloudUtils">
+	</bean>
+
+	<bean id="meetingSoundGenerator" class="com.projects.savethemeeting.sound.MeetingSoundGenerator">
+		<property name="soundCloudUtils" ref="soundCloudUtils"/>
+	</bean>
+
 	<bean id="userDao" class="com.projects.savethemeeting.dao.UserDao">
 		<property name="sessionFactory" ref="sessionFactory"/>
 	</bean>

@@ -3331,6 +3331,12 @@ nav ul a span.badge {
 .margin1 {
   padding-top: 20px;
 }
+.margin2 {
+  margin-left: 20px;
+}
+.margin3 {
+  margin-left: 55px;
+}
 
 .right {
   float: right !important;

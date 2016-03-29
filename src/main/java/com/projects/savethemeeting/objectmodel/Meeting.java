@@ -1,6 +1,7 @@
 package com.projects.savethemeeting.objectmodel;
 
 import com.projects.savethemeeting.controller.MeetingInfo;
+import com.projects.savethemeeting.utils.Util;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -16,12 +17,13 @@ import java.util.List;
 @Table(name = "meeting", schema = "public")
 public class Meeting implements Serializable{
 
-    private static final long serialVersionUID = 498932459446755089L;
+
+    private static final long serialVersionUID = -5547491875990323681L;
 
     public Meeting(MeetingInfo meetingInfo) {
         this.idMeeting = Long.parseLong(meetingInfo.getIdentificator());
         this.name = meetingInfo.getMeetingName();
-        this.started = new Timestamp(Timestamp.parse(meetingInfo.getStarted()));
+        this.started = Util.getTimestampFromString(meetingInfo.getStarted());
         this.duration = meetingInfo.getDuration();
     }
 
@@ -41,7 +43,6 @@ public class Meeting implements Serializable{
 
     @OneToMany(mappedBy = "meeting")
     private List<UserOnMeeting> users = new ArrayList<UserOnMeeting>();
-
 
     public long getIdMeeting() {
         return idMeeting;
@@ -83,6 +84,16 @@ public class Meeting implements Serializable{
     public void setUsers(List<UserOnMeeting> users) {
         this.users = users;
     }
+
+    public String getFormatedDuration() {
+        long duration =  getDuration() / 1000; //in seconds
+        int hours = (int) (duration / 3600);
+        int minutes = (int) ((duration % 3600) / 60);
+        int seconds = (int) (duration % 60);
+        String output = String.format("%02d:%02d:%02d", hours, minutes, seconds);
+        return output;
+    }
+
 
     @Override
     public boolean equals(Object o) {
