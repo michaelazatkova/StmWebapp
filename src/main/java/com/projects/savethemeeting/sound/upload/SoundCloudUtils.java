@@ -17,6 +17,7 @@ public class SoundCloudUtils extends Thread {
 
     public void uploadTrack(final String path, final List<PointOfInterest> points, final String userName) {
         soundcloud.login("savethemeeting.stm@gmail.com","491992");
+
         Runnable upload = new Runnable() {
             @Override
             public void run() {
