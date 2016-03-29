@@ -1,5 +1,32 @@
 Manifest-Version: 1.0
 Built-By: Michaela
+Class-Path: spring-core-4.2.1.RELEASE.jar spring-context-4.2.1.RELEASE
+ .jar spring-aop-4.2.1.RELEASE.jar spring-beans-4.2.1.RELEASE.jar spri
+ ng-expression-4.2.1.RELEASE.jar spring-jdbc-4.2.1.RELEASE.jar spring-
+ tx-4.2.1.RELEASE.jar spring-orm-4.2.1.RELEASE.jar spring-webmvc-4.2.1
+ .RELEASE.jar spring-web-4.2.1.RELEASE.jar spring-webflow-2.2.1.RELEAS
+ E.jar commons-logging-1.1.1.jar spring-binding-2.2.1.RELEASE.jar spri
+ ng-js-2.2.1.RELEASE.jar spring-js-resources-2.2.1.RELEASE.jar spring-
+ security-web-4.0.2.RELEASE.jar aopalliance-1.0.jar spring-security-co
+ re-4.0.2.RELEASE.jar spring-security-taglibs-4.0.2.RELEASE.jar spring
+ -security-acl-4.0.2.RELEASE.jar spring-security-config-4.0.2.RELEASE.
+ jar aspectjrt-1.6.9.jar slf4j-api-1.6.1.jar jcl-over-slf4j-1.6.1.jar 
+ slf4j-log4j12-1.6.1.jar log4j-1.2.16.jar javax.inject-1.jar jstl-1.2.
+ jar hsqldb-2.3.2.jar jstl-1.2.jar tiles-jsp-2.2.2.jar tiles-servlet-2
+ .2.2.jar tiles-core-2.2.2.jar commons-digester-2.0.jar commons-beanut
+ ils-1.8.0.jar tiles-template-2.2.2.jar tiles-api-2.2.2.jar hibernate-
+ entitymanager-4.3.10.Final.jar jboss-logging-3.1.3.GA.jar jboss-loggi
+ ng-annotations-1.2.0.Beta1.jar hibernate-core-4.3.10.Final.jar antlr-
+ 2.7.7.jar jandex-1.1.0.Final.jar dom4j-1.6.1.jar xml-apis-1.0.b2.jar 
+ hibernate-commons-annotations-4.0.5.Final.jar hibernate-jpa-2.1-api-1
+ .0.0.Final.jar jboss-transaction-api_1.2_spec-1.0.0.Final.jar javassi
+ st-3.18.1-GA.jar jackson-databind-2.2.3.jar jackson-annotations-2.2.3
+ .jar jackson-core-2.2.3.jar spring-aspects-4.2.1.RELEASE.jar aspectjw
+ eaver-1.8.6.jar validation-api-1.0.0.GA.jar hibernate-validator-4.1.0
+ .Final.jar joda-time-1.6.2.jar joda-time-jsptags-1.0.2.jar commons-fi
+ leupload-1.2.2.jar commons-io-1.3.2.jar commons-dbcp-1.3.jar commons-
+ pool-1.5.4.jar postgresql-8.4-702.jdbc4.jar tritonus-share-0.3.7-1.ja
+ r soundcloud-0.2.1.jar
 Created-By: IntelliJ IDEA
 Build-Jdk: 1.7.0_79
 
