@@ -1,1 +1,0 @@
-/usr/share/java/apache-maven-3.0.4/bin/mvn -f /var/lib/openshift/564085677628e1701e00008c/app-root/runtime/repo/pom.xml install

@@ -1,108 +1,109 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	   xmlns:jdbc="http://www.springframework.org/schema/jdbc"
-	   xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
-	   xmlns:aop="http://www.springframework.org/schema/aop"
-	   xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.0.xsd
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+       xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.0.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 
+    <!-- Root Context: defines shared resources accessible to all other web components -->
+    <context:property-placeholder/>
+    <!-- Drives transactions using local JPA APIs -->
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
 
-	<context:property-placeholder/>
-	<!-- Drives transactions using local JPA APIs -->
-	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
-		<property name="entityManagerFactory" ref="entityManagerFactory" />
-	</bean>
+    <!-- Creates a EntityManagerFactory for use with the Hibernate JPA provider and a simple in-memory data source populated with test data -->
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="jpaVendorAdapter">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"/>
+        </property>
+    </bean>
+
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+        <property name="driverClassName" value="org.postgresql.Driver"/>
+
+        <property name="username" value="${OPENSHIFT_POSTGRESQL_DB_USERNAME}"></property>
+        <property name="password" value="${OPENSHIFT_POSTGRESQL_DB_PASSWORD}"></property>
+        <property name="url" value="jdbc:postgresql://${OPENSHIFT_POSTGRESQL_DB_HOST}:${OPENSHIFT_POSTGRESQL_DB_PORT}/${OPENSHIFT_APP_NAME}"></property>
+
+        <!--<property name="username" value="admin7kci9rk"></property>-->
+        <!--<property name="password" value="pXaI5RQpsqsh"></property>-->
+        <!--<property name="url" value="jdbc:postgresql://127.0.0.1:5433/stmwebapp"></property>-->
+        <property name="testOnBorrow" value="true"></property>
+        <property name="testOnReturn" value="true"></property>
+        <property name="testWhileIdle" value="true"></property>
+        <property name="timeBetweenEvictionRunsMillis" value="1800000"></property>
+        <property name="numTestsPerEvictionRun" value="3"></property>
+        <property name="minEvictableIdleTimeMillis" value="1800000"></property>
+        <property name="validationQuery" value="SELECT version()"></property>
+    </bean>
+
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.PostgreSQL9Dialect</prop>
+                <prop key="hibernate.hbm2ddl.auto">update</prop>
+            </props>
+        </property>
+        <property name="annotatedClasses">
+            <list>
+                <value>com.projects.savethemeeting.objectmodel.User</value>
+                <value>com.projects.savethemeeting.objectmodel.UserOnMeeting</value>
+                <value>com.projects.savethemeeting.objectmodel.Meeting</value>
+                <value>com.projects.savethemeeting.objectmodel.Record</value>
+                <value>com.projects.savethemeeting.objectmodel.PointOfInterest</value>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="meetingDao" class="com.projects.savethemeeting.dao.MeetingDao">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean id="soundCloudUtils" class="com.projects.savethemeeting.sound.upload.SoundCloudUtils">
+    </bean>
+
+    <bean id="meetingSoundGenerator" class="com.projects.savethemeeting.sound.MeetingSoundGenerator">
+        <property name="soundCloudUtils" ref="soundCloudUtils"/>
+    </bean>
+
+    <bean id="userDao" class="com.projects.savethemeeting.dao.UserDao">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean id="recordDao" class="com.projects.savethemeeting.dao.RecordDao">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean id="userOnMeetingDao" class="com.projects.savethemeeting.dao.UOMDao">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean id="pointOfInterestDao" class="com.projects.savethemeeting.dao.POIDao">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
 
 
-	<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-		<property name="dataSource" ref="dataSource" />
-		<property name="jpaVendorAdapter">
-			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
-		</property>
-	</bean>
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="get*" read-only="true"/>
+            <tx:method name="find*" read-only="true"/>
+            <tx:method name="store*"/>
+            <tx:method name="update*"/>
+            <tx:method name="add*"/>
+        </tx:attributes>
+    </tx:advice>
 
-	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
-		<property name="driverClassName" value="org.postgresql.Driver"></property>
-		<!--<property name="username" value="${OPENSHIFT_POSTGRESQL_DB_USERNAME}"></property>-->
-		<!--<property name="password" value="${OPENSHIFT_POSTGRESQL_DB_PASSWORD}"></property>-->
-		<!--<property name="url" value="jdbc:postgresql://${OPENSHIFT_POSTGRESQL_DB_HOST}:${OPENSHIFT_POSTGRESQL_DB_PORT}/${OPENSHIFT_APP_NAME}"></property>-->
-		<property name="username" value="admin7kci9rk"></property>
-		<property name="password" value="pXaI5RQpsqsh"></property>
-		<property name="url" value="jdbc:postgresql://127.0.0.1:5433/stmwebapp"></property>
-		<property name="testOnBorrow" value="true"></property>
-		<property name="testOnReturn" value="true"></property>
-		<property name="testWhileIdle" value="true"></property>
-		<property name="timeBetweenEvictionRunsMillis" value="1800000"></property>
-		<property name="numTestsPerEvictionRun" value="3"></property>
-		<property name="minEvictableIdleTimeMillis" value="1800000"></property>
-		<property name="validationQuery" value="SELECT version()"></property>
-	</bean>
+    <aop:config>
+        <aop:pointcut id="transactionnalServiceMethods"
+                      expression="execution(* com.projects.savethemeeting.dao.*.*(..))"/>
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="transactionnalServiceMethods"/>
+    </aop:config>
 
-	<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
-		<property name="dataSource" ref="dataSource"/>
-		<property name="hibernateProperties">
-			<props>
-				<prop key="hibernate.dialect">org.hibernate.dialect.PostgreSQL9Dialect</prop>
-				<prop key="hibernate.hbm2ddl.auto">update</prop>
-			</props>
-		</property>
-		<property name="annotatedClasses">
-			<list>
-				<value>com.projects.savethemeeting.objectmodel.User</value>
-				<value>com.projects.savethemeeting.objectmodel.UserOnMeeting</value>
-				<value>com.projects.savethemeeting.objectmodel.Meeting</value>
-				<value>com.projects.savethemeeting.objectmodel.Record</value>
-				<value>com.projects.savethemeeting.objectmodel.PointOfInterest</value>
-			</list>
-		</property>
-	</bean>
-
-	<bean id="meetingDao" class="com.projects.savethemeeting.dao.MeetingDao">
-		<property name="sessionFactory" ref="sessionFactory"/>
-	</bean>
-
-	<bean id="soundCloudUtils" class="com.projects.savethemeeting.sound.upload.SoundCloudUtils">
-	</bean>
-
-	<bean id="meetingSoundGenerator" class="com.projects.savethemeeting.sound.MeetingSoundGenerator">
-		<property name="soundCloudUtils" ref="soundCloudUtils"/>
-	</bean>
-
-	<bean id="userDao" class="com.projects.savethemeeting.dao.UserDao">
-		<property name="sessionFactory" ref="sessionFactory"/>
-	</bean>
-
-	<bean id="recordDao" class="com.projects.savethemeeting.dao.RecordDao">
-		<property name="sessionFactory" ref="sessionFactory"/>
-	</bean>
-
-	<bean id="userOnMeetingDao" class="com.projects.savethemeeting.dao.UOMDao">
-		<property name="sessionFactory" ref="sessionFactory"/>
-	</bean>
-
-	<bean id="pointOfInterestDao" class="com.projects.savethemeeting.dao.POIDao">
-		<property name="sessionFactory" ref="sessionFactory"/>
-	</bean>
-
-
-
-
-	<tx:advice id="txAdvice" transaction-manager="transactionManager">
-		<tx:attributes>
-			<tx:method name="get*" read-only="true"/>
-			<tx:method name="find*" read-only="true"/>
-			<tx:method name="store*"/>
-			<tx:method name="update*"/>
-			<tx:method name="add*"/>
-		</tx:attributes>
-	</tx:advice>
-
-	<aop:config>
-		<aop:pointcut id="transactionnalServiceMethods" expression="execution(* com.projects.savethemeeting.dao.*.*(..))"/>
-		<aop:advisor advice-ref="txAdvice" pointcut-ref="transactionnalServiceMethods"/>
-	</aop:config>
-
-	<aop:aspectj-autoproxy />
+    <aop:aspectj-autoproxy/>
 </beans>

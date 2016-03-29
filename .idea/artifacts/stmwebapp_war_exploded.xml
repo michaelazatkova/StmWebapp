@@ -71,7 +71,7 @@
           <element id="library" level="project" name="Maven: commons-pool:commons-pool:1.5.4" />
           <element id="library" level="project" name="Maven: postgresql:postgresql:8.4-702.jdbc4" />
           <element id="library" level="project" name="Maven: com.googlecode.soundlibs:tritonus-share:0.3.7-1" />
-          <element id="library" level="project" name="soundcloud-0.2.1-jar-with-dependencies" />
+          <element id="library" level="project" name="Maven: de.voidplus.soundcloud:soundcloud:0.2.1" />
         </element>
       </element>
       <element id="directory" name="META-INF">
