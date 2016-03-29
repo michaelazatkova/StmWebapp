@@ -295,6 +295,10 @@
             <groupId>de.voidplus.soundcloud</groupId>
             <artifactId>soundcloud</artifactId>
             <version>0.2.1</version>
+            <type>jar</type>
+            <scope>system</scope>
+
+            <systemPath>${project.basedir}/soundcloud-0.2.1-jar-with-dependencies.jar</systemPath>
         </dependency>
     </dependencies>
     <repositories>

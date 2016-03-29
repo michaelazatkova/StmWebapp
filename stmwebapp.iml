@@ -56,6 +56,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="soundcloud-0.2.1-jar-with-dependencies" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-core:4.2.1.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-context:4.2.1.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-aop:4.2.1.RELEASE" level="project" />
@@ -126,6 +127,14 @@
     <orderEntry type="library" name="Maven: commons-pool:commons-pool:1.5.4" level="project" />
     <orderEntry type="library" name="Maven: postgresql:postgresql:8.4-702.jdbc4" level="project" />
     <orderEntry type="library" name="Maven: com.googlecode.soundlibs:tritonus-share:0.3.7-1" level="project" />
-    <orderEntry type="library" name="Maven: de.voidplus.soundcloud:soundcloud:0.2.1" level="project" />
+    <orderEntry type="module-library">
+      <library name="Maven: de.voidplus.soundcloud:soundcloud:0.2.1">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/soundcloud-0.2.1-jar-with-dependencies.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>
