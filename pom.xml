@@ -350,6 +350,11 @@
 				<artifactId>maven-war-plugin</artifactId>
 				<configuration>
 					<warName>savethemeeting</warName>
+					<archive>
+						<manifest>
+							<addClasspath>true</addClasspath>
+						</manifest>
+					</archive>
 				</configuration>
 			</plugin>
 			<plugin>
