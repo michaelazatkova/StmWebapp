@@ -48,6 +48,7 @@ public class MeetingSoundGenerator {
             public void run() {
                 long diff = Math.abs((meetingStarted.getTime() - connectedFrom.getTime()) / 1000) + 1; //difference in seconds
 
+               //todo Runtime.getRuntime().exec("ffmpeg -r 1 -i sample%d.png -s 320x240 -aspect 4:3 output.flv");
                 File batchFile = new File(Constants.TOOLS_DIR + "createFirst.bat");
                 String[] command = {batchFile.getAbsolutePath(), String.valueOf(diff), record.getPath()};
                 final ProcessBuilder processBuilder = new ProcessBuilder(command);

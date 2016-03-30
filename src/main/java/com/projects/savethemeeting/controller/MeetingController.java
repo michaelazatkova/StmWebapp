@@ -27,6 +27,12 @@ public class MeetingController {
     private UserDao userDao;
 
     @RequestMapping("/")
+    public ModelAndView login() {
+        ModelAndView modelAndView = new ModelAndView("login");
+        return modelAndView;
+    }
+
+    @RequestMapping("/home")
     public ModelAndView welcome() {
         meetingDao.openCurrentSessionwithTransaction();
         Meeting lastMeeting = meetingDao.getLastMeeting();

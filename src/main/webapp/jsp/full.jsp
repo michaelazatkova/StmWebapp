@@ -18,7 +18,7 @@
                         <div class="icon-block grey lighten-4">
                             <h2 class="center black-text margin1"><i class="material-icons">description</i></h2>
 
-                            <p class="light"><t:fullLastMeeting lastMeeting="${lastMeeting}"
+                            <p class="light"><t:fullMeeting meeting="${lastMeeting}"
                                                                 participants="${participants}"/></p>
                         </div>
                     </div>

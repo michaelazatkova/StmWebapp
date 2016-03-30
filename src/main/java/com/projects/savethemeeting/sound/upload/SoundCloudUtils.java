@@ -42,5 +42,27 @@ public class SoundCloudUtils extends Thread {
 
     }
 
+//    public static void main(String[] args) {
+//        final SoundCloud soundcloud = new SoundCloud("cb5ef3b1acde0f9998eafecfb2356678","598edc71dc99298c8c25c65a9d2f3b8a");
+//        soundcloud.login("savethemeeting.stm@gmail.com","491992");
+//
+//        final String path = "c:\\Users\\Michaela\\Documents\\1703230723286509.amr ";
+//        Runnable upload = new Runnable() {
+//            @Override
+//            public void run() {
+//                String trackName = "1459344458027";
+//                System.out.println("Uploading track " + trackName + " to SOUNDCLOUD....");
+//                Track track = new Track();
+//                track.setFile(path);
+//                track.setTitle(trackName);
+//
+//                // POST track
+//                Track t = soundcloud.postTrack(track);
+//
+//            }
+//        };
+//        upload.run();
+//    }
+
 
 }
