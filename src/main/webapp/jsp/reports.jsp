@@ -14,19 +14,6 @@
             <div class="section">
                 <!--   Icon Section   -->
                 <div class="row">
-                    <div class="col s12 m6 responsive-height">
-                        <div class="icon-block grey lighten-4">
-                            <h2 class="center black-text margin1"><i class="material-icons">description</i></h2>
-                            <h5 class="center">Reports</h5>
-
-                            <p class="light">
-                                <c:forEach items="${resultMap}" var="item">
-                                    <t:shortMeetingInfo lastMeeting="${item.key}" participants="${item.value}"/>
-                                </c:forEach>
-                            </p>
-                        </div>
-                    </div>
-
                     <div class="col s12 m6">
                         <div class="icon-block grey lighten-4">
                             <h2 class="center black-text margin1"><i class="material-icons">search</i></h2>
@@ -36,7 +23,8 @@
                                 <div class="nav-wrapper">
                                     <form class=searchform>
                                         <div class="input-field">
-                                            <input id="search" type="search" required placeholder="Enter meeting name...">
+                                            <input id="search" type="search" required
+                                                   placeholder="Enter meeting name...">
                                             <label for="search"><i class="material-icons">search</i></label>
                                             <i class="material-icons">close</i>
                                         </div>
@@ -47,7 +35,8 @@
                                 <div class="nav-wrapper">
                                     <form class=searchform>
                                         <div class="input-field">
-                                             <input type="search" required id="fromdatepicker" placeholder="Click to choose FROM date">
+                                            <input type="search" required id="fromdatepicker"
+                                                   placeholder="Click to choose FROM date">
                                             <label for="fromdatepicker"><i class="material-icons">search</i></label>
                                             <i class="material-icons">close</i>
                                         </div>
@@ -58,16 +47,26 @@
                                 <div class="nav-wrapper">
                                     <form class=searchform>
                                         <div class="input-field">
-                                            <input type="search" required id="todatepicker" placeholder="Click to choose TO date ">
+                                            <input type="search" required id="todatepicker"
+                                                   placeholder="Click to choose TO date ">
                                             <label for="todatepicker"><i class="material-icons">search</i></label>
                                             <i class="material-icons">close</i>
                                         </div>
                                     </form>
                                 </div>
                             </nav>
+                        </div>
+                    </div>
+                    <div class="col s12 m6 responsive-height">
+                        <div class="icon-block grey lighten-4">
+                            <h2 class="center black-text margin1"><i class="material-icons">description</i></h2>
+                            <h5 class="center">Reports</h5>
 
-
-
+                            <p class="light">
+                                <c:forEach items="${resultMap}" var="item">
+                                    <t:shortMeetingInfo lastMeeting="${item.key}" participants="${item.value}"/>
+                                </c:forEach>
+                            </p>
                         </div>
                     </div>
                 </div>

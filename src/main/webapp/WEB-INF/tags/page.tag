@@ -60,11 +60,6 @@
             <li><a href="<c:url value="/reports"/>" class="white-text"><i class="material-icons left">library_books</i>My
                 meeting reports</a></li>
         </ul>
-
-        <ul id="nav-mobile" class="side-nav">
-            <li><a href="<c:url value="/reports"/>" class="white-text">My meeting reports</a></li>
-        </ul>
-        <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
     </div>
 </nav>
 
@@ -99,7 +94,7 @@
     </div>
     <div class="footer-copyright">
         <div class="container">
-            Made by Michaela ZaĹĄkovĂˇ
+            Made by Michaela Zaťková
         </div>
     </div>
 </footer>
