@@ -9,7 +9,7 @@
 <h4 class="center grey lighten-4">Last meeting report preview</h4>
 <h5 class="teal-text ">${lastMeeting.name}</h5>
 <span class="teal-text ">Date and time: </span> <span class="teal-text darken2 margin2"><fmt:formatDate
-        value="${lastMeeting.started}" pattern="HH:mm:ss dd.MM.yyyy"/></span>
+        value="${lastMeeting.started}" pattern="HH:mm dd.MM.yyyy"/></span>
 <br>
 <span class="teal-text">Duration: </span> <span class="teal-text darken2 margin3">${lastMeeting.formatedDuration}</span>
 

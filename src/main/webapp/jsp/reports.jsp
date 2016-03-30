@@ -57,16 +57,17 @@
                             </nav>
                         </div>
                     </div>
-                    <div class="col s12 m6 responsive-height">
+                    <div class="col s12 m6">
                         <div class="icon-block grey lighten-4">
                             <h2 class="center black-text margin1"><i class="material-icons">description</i></h2>
                             <h5 class="center">Reports</h5>
-
+                            <div class="responsive-height">
                             <p class="light">
                                 <c:forEach items="${resultMap}" var="item">
                                     <t:shortMeetingInfo lastMeeting="${item.key}" participants="${item.value}"/>
                                 </c:forEach>
                             </p>
+                            </div>
                         </div>
                     </div>
                 </div>

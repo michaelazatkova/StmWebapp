@@ -8,7 +8,7 @@
 <div class="meeting-wrapper">
     <h5 class="teal-text meeting-name">${lastMeeting.name}</h5>
     <span class="teal-text ">Date and time: </span> <span class="teal-text darken2 margin2"><fmt:formatDate
-        value="${lastMeeting.started}" pattern="HH:mm:ss dd.MM.yyyy"/></span>
+        value="${lastMeeting.started}" pattern="HH:mm dd.MM.yyyy"/></span>
     <t:participantsTable participants="${participants}"/>
 
     <h6 class="teal-text right"><a href="<c:url value="/full/${lastMeeting.idMeeting}"/>"> See full report >></a></h6>

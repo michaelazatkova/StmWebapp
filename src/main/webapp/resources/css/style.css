@@ -49,7 +49,7 @@ p {
 }
 
 .responsive-height {
-    max-height: 700px !important;
+    max-height: 620px !important;
     overflow: auto !important;
 }
 

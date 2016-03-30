@@ -7,7 +7,7 @@
 
 <h4 class="center teal-text">Last meeting report preview</h4>
 <h5 class="teal-text " >${lastMeeting.name}</h5>
-<h6 class="teal-text " >Date and time: </h6> <h6 class="teal-text darken2 margin2"><fmt:formatDate value="${lastMeeting.started}" pattern="HH:mm:ss dd.MM.yyyy" /></h6>
+<h6 class="teal-text " >Date and time: </h6> <h6 class="teal-text darken2 margin2"><fmt:formatDate value="${lastMeeting.started}" pattern="HH:mm dd.MM.yyyy" /></h6>
 <br>
 <h6 class="teal-text" >Duration: </h6> <h6 class="teal-text darken2 margin3">${lastMeeting.formatedDuration}</h6>
 
