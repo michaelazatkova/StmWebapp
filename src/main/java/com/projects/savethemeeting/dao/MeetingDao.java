@@ -52,12 +52,17 @@ public class MeetingDao extends BaseDao<Meeting> {
     }
 
     public List<Meeting> getLastMeetings(int number) {
-        List<Meeting> lastMeetings  = getCurrentSession()
+        Criteria criteria = getCurrentSession()
                 .createCriteria(Meeting.class)
-                .addOrder(Order.desc("started"))
-                .setMaxResults(number).list();
-        return lastMeetings;
+                .addOrder(Order.desc("started"));
+        if(number != -1) {
+            criteria.setMaxResults(number);
+        }
+        return criteria.list();
 
     }
 
+    public Meeting getMeeting(long id) {
+        return (Meeting) getCurrentSession().createQuery("from Meeting where idMeeting = :id").setParameter("id", id).uniqueResult();
+    }
 }

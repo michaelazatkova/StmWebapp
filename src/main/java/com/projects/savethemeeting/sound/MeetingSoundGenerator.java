@@ -5,6 +5,7 @@ import com.projects.savethemeeting.objectmodel.Record;
 import com.projects.savethemeeting.sound.merge.AudioMix;
 import com.projects.savethemeeting.sound.upload.SoundCloudUtils;
 import com.projects.savethemeeting.utils.Constants;
+import com.projects.savethemeeting.utils.ProcessWrapper;
 
 import java.io.File;
 import java.io.IOException;
@@ -55,16 +56,16 @@ public class MeetingSoundGenerator {
                 processBuilder.redirectOutput(new File(batchFile.getParent() + "/output.txt"));
                 try {
                     final Process process = processBuilder.start();
-                    final int exitStatus = process.waitFor();
+                    final int exitStatus = new ProcessWrapper(process).waitFor(30 * 60 * 1000L);
                     System.out.println("Generator finished with status: " + exitStatus);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
                 } catch (IOException e) {
                     e.printStackTrace();
+                } finally {
+                    // ked sa zryhas, free
+                    free();
                 }
                 File parent = new File(record.getPath()).getParentFile();
                 soundCloudUtils.uploadTrack(parent.getAbsolutePath() + File.separator + "full.mp3",pointsOfInterest,userName);
-                free();
             }
         });
         process.start();

@@ -5,6 +5,7 @@ import com.projects.savethemeeting.objectmodel.*;
 import com.projects.savethemeeting.sound.MeetingSoundGenerator;
 import com.projects.savethemeeting.sound.upload.SoundCloudUtils;
 import com.projects.savethemeeting.utils.Constants;
+import com.projects.savethemeeting.utils.ProcessWrapper;
 import com.projects.savethemeeting.utils.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -73,6 +74,17 @@ public class RestApiController {
             running = true;
             super.start();
         }
+    }
+
+    @RequestMapping("/killall")
+    public @ResponseBody boolean killSoundProcessing() {
+        if(ProcessWrapper.currentProcess != null) {
+            ProcessWrapper.currentProcess.interrupt();
+
+            return true;
+        }
+
+        return false;
     }
 
     @RequestMapping(value="/meeting",method = RequestMethod.POST,consumes="application/json" )

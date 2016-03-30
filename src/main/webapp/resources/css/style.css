@@ -36,6 +36,23 @@ p {
     color: #26a69a;
 }
 
+#player {
+    height: 150px;
+}
+
+#player iframe {
+    height: 100%;
+}
+
+.medium {
+    min-height: 550px !important;
+}
+
+.responsive-height {
+    max-height: 700px !important;
+    overflow: auto !important;
+}
+
 .parallax-container {
     min-height: 380px;
     line-height: 0;

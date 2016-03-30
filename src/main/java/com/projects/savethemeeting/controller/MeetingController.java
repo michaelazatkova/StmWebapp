@@ -6,10 +6,14 @@ import com.projects.savethemeeting.objectmodel.Meeting;
 import com.projects.savethemeeting.objectmodel.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Michaela on 15.03.2016.
@@ -38,7 +42,7 @@ public class MeetingController {
     }
 
     @RequestMapping("/full")
-    public ModelAndView reports() {
+    public ModelAndView fullReport() {
         meetingDao.openCurrentSessionwithTransaction();
         Meeting lastMeeting = meetingDao.getLastMeeting();
         List<User> participants = userDao.getUsers(lastMeeting);
@@ -49,4 +53,33 @@ public class MeetingController {
 
         return modelAndView;
     }
+
+    @RequestMapping("/full/{id}")
+    public ModelAndView reports(@PathVariable long id) {
+        meetingDao.openCurrentSessionwithTransaction();
+        Meeting lastMeeting = meetingDao.getMeeting(id);
+        List<User> participants = userDao.getUsers(lastMeeting);
+        meetingDao.closeCurrentSessionwithTransaction();
+        ModelAndView modelAndView = new ModelAndView("full");
+        modelAndView.addObject("lastMeeting", lastMeeting);
+        modelAndView.addObject("participants", participants);
+
+        return modelAndView;
+    }
+
+    @RequestMapping("/reports")
+    public ModelAndView reports() {
+        ModelAndView modelAndView = new ModelAndView("reports");
+        meetingDao.openCurrentSessionwithTransaction();
+        List<Meeting> meetings = meetingDao.getLastMeetings(-1);
+        Map<Meeting, List<User>> resultMap = new HashMap<Meeting, List<User>>();
+        for(Meeting meeting : meetings) {
+            List<User> participants = userDao.getUsers(meeting);
+            resultMap.put(meeting, participants);
+        }
+        meetingDao.closeCurrentSessionwithTransaction();
+        modelAndView.addObject("resultMap", resultMap);
+        return modelAndView;
+    }
+
 }

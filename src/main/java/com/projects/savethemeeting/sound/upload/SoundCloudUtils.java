@@ -33,7 +33,7 @@ public class SoundCloudUtils extends Thread {
                 for (PointOfInterest poi :points) {
                     Comment comment = new Comment();
                     comment.setBody(userName +" said: This is interesting!");
-                    comment.setTimestamp((int)(poi.getTimeOffset()/1000));
+                    comment.setTimestamp((int)(poi.getTimeOffset()));
                     soundcloud.postCommentToTrack(trackID,comment);
                 }
             }

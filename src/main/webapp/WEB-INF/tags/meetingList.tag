@@ -4,14 +4,16 @@
 
 <%@attribute name="lastMeetings" type="java.util.List<com.projects.savethemeeting.objectmodel.Meeting>" required="true" %>
 
-<h4 class="center teal-text">Latest reports</h4>
+<h4 class="center grey lighten-4">Latest reports</h4>
 <div class="collection">
   <c:forEach var="meeting" items="${lastMeetings}">
-    <a href="#!" class="collection-item">${meeting.name}</a>
+    <a class="collection-item" href="<c:url value="/full/${meeting.idMeeting}"/>"><div>${meeting.name}<span class="secondary-content" ><i class="material-icons teal-text">send</i></span></div></a>
   </c:forEach>
 </div>
 
-
-</iframe>
-
+<form action="<c:url value="/reports"/>" method="GET">
+  <button class="btn waves-effect waves-light right" type="submit" name="action">See all reports
+    <i class="material-icons right">send</i>
+  </button>
+</form>
 
