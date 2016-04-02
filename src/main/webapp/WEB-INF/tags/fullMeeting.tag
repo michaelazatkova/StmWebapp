@@ -11,7 +11,7 @@
 <br>
 <h6 class="teal-text" >Duration: </h6> <h6 class="teal-text darken2 margin3">${meeting.formatedDuration}</h6>
 
-<div id="player" data="${meeting.idMeeting}">
+<div id="player" class="teal" data="${meeting.idMeeting}">
 </div>
 
 <t:participantsTable participants="${participants}"/>

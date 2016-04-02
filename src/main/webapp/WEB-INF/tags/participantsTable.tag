@@ -4,10 +4,12 @@
 <%@attribute name="participants" type="java.util.List<com.projects.savethemeeting.objectmodel.User>" required="true" %>
 
 <br>
+<div>
 <c:forEach var="person" items="${participants}">
     <div class="chip">
         <img src="<c:url value="/resources/images/person-icon.png"/>" width="16px">
             ${person.name}
     </div>
 </c:forEach>
+</div>
 

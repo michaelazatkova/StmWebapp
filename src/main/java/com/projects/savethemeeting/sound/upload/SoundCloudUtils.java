@@ -7,6 +7,7 @@ import de.voidplus.soundcloud.SoundCloud;
 import de.voidplus.soundcloud.Track;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -40,6 +41,18 @@ public class SoundCloudUtils extends Thread {
         };
         upload.run();
 
+    }
+
+    public List<Comment> getAllComments(long meetingId) {
+        soundcloud.login("savethemeeting.stm@gmail.com","491992");
+        ArrayList<Track> tracks = soundcloud.getMeTracks();
+        Track track;
+        for (Track t: tracks) {
+            if (t.getTitle().equals(String.valueOf(meetingId))) {
+               return soundcloud.getCommentsFromTrack(t.getId());
+            }
+        }
+        return new ArrayList<Comment>();
     }
 
 //    public static void main(String[] args) {

@@ -11,7 +11,8 @@
         value="${lastMeeting.started}" pattern="HH:mm dd.MM.yyyy"/></span>
     <t:participantsTable participants="${participants}"/>
 
-    <h6 class="teal-text right"><a href="<c:url value="/full/${lastMeeting.idMeeting}"/>"> See full report >></a></h6>
+    <a class="waves-effect waves-teal btn-floating right" href="<c:url value="/full/${lastMeeting.idMeeting}"/>"><i class="material-icons right">send</i>See full report</a>
+    <%--<h6 class="teal-text right"><a href="<c:url value="/full/${lastMeeting.idMeeting}"/>"> See full report >></a></h6>--%>
     <br>
     <hr>
 </div>

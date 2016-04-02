@@ -5,7 +5,11 @@ $(function() {
         if($('#player').length > 0) {
             var url = 'https://soundcloud.com/user-790524602/' + $('#player').attr('data') + '-1';
             SC.oEmbed(url, {
-                show_user: false
+                show_user: false,
+                sharing: false,
+                buying: false,
+                show_artwork: false,
+                color: "008080"
             }).then(function(data) {
                $('#player').html(data.html);
             });

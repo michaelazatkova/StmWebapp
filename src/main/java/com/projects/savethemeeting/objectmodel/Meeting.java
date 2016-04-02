@@ -8,6 +8,7 @@ import java.io.Serializable;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -15,7 +16,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "meeting", schema = "public")
-public class Meeting implements Serializable{
+public class Meeting implements Serializable, Comparable{
 
 
     private static final long serialVersionUID = -5547491875990323681L;
@@ -94,6 +95,20 @@ public class Meeting implements Serializable{
         return output;
     }
 
+    @Override
+    public int compareTo(Object o) {
+        if (o instanceof Meeting) {
+            return ((Meeting) o).getStarted().compareTo(this.getStarted());
+        }
+        return -1;
+    }
+
+    public static class MeetingComparator implements Comparator<Meeting> {
+        @Override
+        public int compare(Meeting o1, Meeting o2) {
+            return o1.getStarted().compareTo(o2.getStarted());
+        }
+    }
 
     @Override
     public boolean equals(Object o) {
