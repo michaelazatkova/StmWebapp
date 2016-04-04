@@ -7,12 +7,20 @@
 
 <h4 class="center teal-text">Last meeting report preview</h4>
 <h5 class="teal-text " >${meeting.name}</h5>
-<h6 class="teal-text " >Date and time: </h6> <h6 class="teal-text darken2 margin2"><fmt:formatDate value="${meeting.started}" pattern="HH:mm dd.MM.yyyy" /></h6>
+<hr>
+<span class="teal-text chip" >Date and time </span> <h6 class="teal-text darken3 margin2"><fmt:formatDate value="${meeting.started}" pattern="HH:mm dd.MM.yyyy" /></h6>
 <br>
-<h6 class="teal-text" >Duration: </h6> <h6 class="teal-text darken2 margin3">${meeting.formatedDuration}</h6>
+<span class="teal-text chip" >Duration </span> <h6 class="teal-text darken3 margin2">${meeting.formatedDuration}</h6>
 
 <div id="player" class="teal" data="${meeting.idMeeting}">
 </div>
-
+<br>
+<div class="row">
+    <div class="col s9">
+    <span> COMMENTS</span>
+    </div>
+    <div class="col s3"
 <t:participantsTable participants="${participants}"/>
+    </div>
+</div>
 

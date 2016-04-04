@@ -36,7 +36,7 @@
 
         <property name="username" value="admin7kci9rk"></property>
         <property name="password" value="pXaI5RQpsqsh"></property>
-        <property name="url" value="jdbc:postgresql://127.0.0.1:5432/stmwebapp"></property>
+        <property name="url" value="jdbc:postgresql://127.0.0.1:5433/stmwebapp"></property>
         <property name="testOnBorrow" value="true"></property>
         <property name="testOnReturn" value="true"></property>
         <property name="testWhileIdle" value="true"></property>

@@ -18,7 +18,6 @@ import java.util.List;
 @Table(name = "meeting", schema = "public")
 public class Meeting implements Serializable, Comparable{
 
-
     private static final long serialVersionUID = -5547491875990323681L;
 
     public Meeting(MeetingInfo meetingInfo) {

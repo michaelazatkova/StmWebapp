@@ -23,19 +23,38 @@ public class SoundCloudUtils extends Thread {
             @Override
             public void run() {
                 String trackName = (new File(path)).getParentFile().getName();
-                System.out.println("Uploading track " + trackName + " to SOUNDCLOUD....");
-                Track track = new Track();
-                track.setFile(path);
-                track.setTitle(trackName);
+                boolean doUpload = true;
+                ArrayList<Track> tracks = soundcloud.getMeTracks();
 
-                // POST track
-                Track t = soundcloud.postTrack(track);
-                int trackID =t.getId();
-                for (PointOfInterest poi :points) {
-                    Comment comment = new Comment();
-                    comment.setBody(userName +" said: This is interesting!");
-                    comment.setTimestamp((int)(poi.getTimeOffset()));
-                    soundcloud.postCommentToTrack(trackID,comment);
+                for (Track t: tracks) {
+                    if (t.getTitle().equals(String.valueOf(trackName))) {
+                        doUpload = false;
+                        System.out.println("Meeting sound already exists on SC. "+trackName+" will be deleted first.");
+                       boolean deleted = soundcloud.deleteTrack(t.getId());
+                        if (deleted)  {
+                            System.out.println(trackName+" has been successfully deleted from SQ");
+                            doUpload = true;
+                        }
+                        else System.out.println("Unable to delete "+trackName+" from SC");
+                    }
+                }
+
+                if (doUpload) {
+                    System.out.println("Uploading track " + trackName + " to SOUNDCLOUD....");
+                    Track track = new Track();
+                    track.setFile(path);
+                    track.setTitle(trackName);
+
+                    // POST track
+                    Track t = soundcloud.postTrack(track);
+                    int trackID = t.getId();
+                    for (PointOfInterest poi : points) {
+                        Comment comment = new Comment();
+                        comment.setBody(userName + " said: This is interesting!");
+                        comment.setTimestamp((int) (poi.getTimeOffset()));
+                        soundcloud.postCommentToTrack(trackID, comment);
+                    }
+                    System.out.println("Upload completed....");
                 }
             }
         };
@@ -55,27 +74,36 @@ public class SoundCloudUtils extends Thread {
         return new ArrayList<Comment>();
     }
 
-//    public static void main(String[] args) {
-//        final SoundCloud soundcloud = new SoundCloud("cb5ef3b1acde0f9998eafecfb2356678","598edc71dc99298c8c25c65a9d2f3b8a");
-//        soundcloud.login("savethemeeting.stm@gmail.com","491992");
-//
-//        final String path = "c:\\Users\\Michaela\\Documents\\1703230723286509.amr ";
-//        Runnable upload = new Runnable() {
-//            @Override
-//            public void run() {
-//                String trackName = "1459344458027";
-//                System.out.println("Uploading track " + trackName + " to SOUNDCLOUD....");
-//                Track track = new Track();
-//                track.setFile(path);
-//                track.setTitle(trackName);
-//
-//                // POST track
-//                Track t = soundcloud.postTrack(track);
-//
-//            }
-//        };
-//        upload.run();
-//    }
+    public static void main(String[] args) {
+        final SoundCloud soundcloud = new SoundCloud("cb5ef3b1acde0f9998eafecfb2356678","598edc71dc99298c8c25c65a9d2f3b8a");
+        soundcloud.login("savethemeeting.stm@gmail.com","491992");
+
+        final String path = "c:\\Users\\Michaela\\app-root\\data\\records\\1459766952920\\full.mp3";
+        Runnable upload = new Runnable() {
+            @Override
+            public void run() {
+                String trackName = (new File(path)).getParentFile().getName();
+                boolean doUpload = true;
+                ArrayList<Track> tracks = soundcloud.getMeTracks();
+
+                for (Track t: tracks) {
+                    if (t.getTitle().equals(trackName)) {
+                        doUpload = false;
+                        System.out.println("Meeting sound already exists on SC. "+trackName+" will be deleted first.");
+                        boolean deleted = soundcloud.delete("tracks/"+t.getId());
+                        if (deleted)  {
+                            System.out.println(trackName+" has been successfully deleted from SQ");
+                            doUpload = true;
+                        }
+                        else System.out.println("Unable to delete "+trackName+" from SC");
+                    }
+                }
+
+
+            }
+        };
+        upload.run();
+    }
 
 
 }

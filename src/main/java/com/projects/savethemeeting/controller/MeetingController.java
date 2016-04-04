@@ -114,11 +114,13 @@ public class MeetingController {
             List<User> participants = userDao.getUsers(meeting);
             resultMap.put(meeting, participants);
         }
+        List<String> userNames = userDao.getAllUserNames();
         meetingDao.closeCurrentSessionwithTransaction();
 
         // add them to view
         ModelAndView modelAndView = new ModelAndView("reports");
         modelAndView.addObject("resultMap", resultMap);
+        modelAndView.addObject("allusers", userNames);
 
         return modelAndView;
     }

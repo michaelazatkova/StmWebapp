@@ -15,7 +15,7 @@
 
 <div id="player" data="${lastMeeting.idMeeting}">
 </div>
-<t:participantsTable participants="${participants}"/>
+<t:participantsList participants="${participants}"/>
 
 <form action="<c:url value="/full"/>" method="GET">
     <button class="btn waves-effect waves-light right" type="submit" name="action">See full report

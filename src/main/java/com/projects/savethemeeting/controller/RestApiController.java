@@ -127,7 +127,7 @@ public class RestApiController {
         }
         else {
             meetingDao.update(newMeeting);
-            meetingSoundGenerator.regenerateMeetingSound(record, userOnMeeting.getFrom(), newMeeting.getStarted());
+            meetingSoundGenerator.regenerateMeetingSound(record, userOnMeeting.getFrom(), newMeeting.getStarted(),meeting.getPointsOfInterest(),user.getName());
         }
         meetingDao.openCurrentSessionwithTransaction();
 

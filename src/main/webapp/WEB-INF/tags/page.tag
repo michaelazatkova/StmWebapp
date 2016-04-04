@@ -14,7 +14,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
     <title>Save the meeting</title>
 
-    <link rel="icon" href="<c:url value="/resources/images/favicon.ico"/>"/>
+    <link rel="icon" href="<c:url value="/resources/images/favicon.png"/>"/>
 
     <!-- CSS  -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -40,7 +40,7 @@
 <script>
     window.fbAsyncInit = function () {
         FB.init({
-            appId: '980184545362030',
+            appId: '1729291490636063',
             cookie: true,
             xfbml: true,
             version: 'v2.5'
@@ -77,7 +77,7 @@
                 <li>
                     <a href="#" class="white-text logout-button">
                         <img width="32px" style="top: 50%; transform: translate(0, 33%)"
-                             src="<c:url value="/resources/images/facebook-128.png"/>">
+                             src="<c:url value="/resources/images/fb.png"/>">
                         Logout
                     </a>
                 </li>

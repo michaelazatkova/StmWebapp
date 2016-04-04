@@ -89,3 +89,11 @@ p {
 footer.page-footer {
     margin: 0;
 }
+
+.veralign {
+    position: relative;
+    top: 50%;
+    margin-left: 20px !important;
+    width: 200px !important;
+    transform: translate(0, -50%);
+}

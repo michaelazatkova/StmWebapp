@@ -35,8 +35,8 @@ public class MeetingDao extends BaseDao<Meeting> {
     }
 
     public Meeting getLastMeeting(long userId) {
-        Meeting lastMeeting  = (Meeting)getCurrentSession()
-                .createQuery("from Meeting m join m.users as u where u.user.fbID = :id order by m.started")
+        Meeting lastMeeting  = (Meeting) getCurrentSession()
+                .createQuery("select m from Meeting m join m.users as u where u.user.fbID = :id order by m.started")
                 .setParameter("id", userId)
                 .setMaxResults(1)
                 .uniqueResult();
@@ -54,7 +54,7 @@ public class MeetingDao extends BaseDao<Meeting> {
 
     public List<Meeting> getLastMeetings(int number, long userId) {
         Query query = getCurrentSession()
-                .createQuery("from Meeting m join m.users as u where u.user.fbID = :id order by m.started")
+                .createQuery("select m from Meeting m join m.users as u where u.user.fbID = :id order by m.started")
                 .setParameter("id", userId);
         if(number != -1) {
             query.setMaxResults(number);

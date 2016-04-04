@@ -3,6 +3,7 @@ package com.projects.savethemeeting.dao;
 import com.projects.savethemeeting.objectmodel.Meeting;
 import com.projects.savethemeeting.objectmodel.User;
 import com.projects.savethemeeting.objectmodel.UserOnMeeting;
+import org.hibernate.Query;
 import org.hibernate.criterion.Restrictions;
 
 import java.util.ArrayList;
@@ -41,5 +42,12 @@ public class UserDao extends  BaseDao<User> {
             participants.add(oum.getUser());
         }
         return participants;
+    }
+
+    public List<String> getAllUserNames() {
+        Query query = getCurrentSession()
+                .createQuery("select name from User");
+        return query.list();
+
     }
 }
