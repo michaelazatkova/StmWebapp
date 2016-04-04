@@ -11,6 +11,7 @@
        <class>com.projects.savethemeeting.objectmodel.Meeting</class>
        <class>com.projects.savethemeeting.objectmodel.Record</class>
        <class>com.projects.savethemeeting.objectmodel.PointOfInterest</class>
+       <class>com.projects.savethemeeting.objectmodel.UserRole</class>
 
       <properties>
       	 <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>

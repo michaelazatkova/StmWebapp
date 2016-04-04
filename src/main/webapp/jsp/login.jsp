@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: Michaela
@@ -7,103 +8,170 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
+<!DOCTYPE HTML>
 <html>
 <head>
-  <title>Save the meeting</title>
-  <meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="icon" href="<c:url value="/resources/images/favicon.ico"/>"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta charset="UTF-8">
+
+    <%--CSS--%>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="<c:url value="/resources/css/materialize.min.css"/>"
+          media="screen,projection"/>
+    <link rel="stylesheet" href="<c:url value="/resources/css/style.css"/>" media="screen,projection"/>
+
+    <%--JS--%>
+    <script src="<c:url value="/resources/js/jquery-2.2.1.min.js"/>"></script>
+    <script src="<c:url value="/resources/js/blockUI.js"/>"></script>
+    <script src="<c:url value="/resources/js/materialize.min.js"/>"></script>
 </head>
 <body>
 <script>
-  // This is called with the results from from FB.getLoginStatus().
-  function statusChangeCallback(response) {
-    console.log('statusChangeCallback');
-    console.log(response);
-    // The response object is returned with a status field that lets the
-    // app know the current login status of the person.
-    // Full docs on the response object can be found in the documentation
-    // for FB.getLoginStatus().
-    if (response.status === 'connected') {
-      // Logged into your app and Facebook.
-      testAPI();
-    } else if (response.status === 'not_authorized') {
-      // The person is logged into Facebook, but not your app.
-      document.getElementById('status').innerHTML = 'Please log ' +
-              'into this app.';
-    } else {
-      // The person is not logged into Facebook, so we're not sure if
-      // they are logged into this app or not.
-      document.getElementById('status').innerHTML = 'Please log ' +
-              'into Facebook.';
+    var first = false;
+    function statusChangeCallback(response) {
+        if (response.status === 'connected') {
+            first = true;
+            customBlockUI();
+            loginToWebApp();
+        }
     }
-  }
 
-  // This function is called when someone finishes with the Login
-  // Button.  See the onlogin handler attached to it in the sample
-  // code below.
-  function checkLoginState() {
-    FB.getLoginStatus(function(response) {
-      statusChangeCallback(response);
-    });
-  }
+    function customBlockUI() {
+        $.blockUI({
+            message: '<div class="container">' +
+            '<p>Please wait</p>' +
+            '<div class="preloader-wrapper big active">' +
+            '<div class="spinner-layer spinner-blue">' +
+            '<div class="circle-clipper left">' +
+            '<div class="circle"></div>' +
+            '</div><div class="gap-patch">' +
+            '<div class="circle"></div>' +
+            '</div><div class="circle-clipper right">' +
+            '<div class="circle"></div>' +
+            '</div>' +
+            '</div>' +
+            '</div>',
+            fadeIn: 0,
+            fadeOut: 0,
+            showOverlay: true,
+            centerY: true,
+            centerX: true,
+            css: {
+                width: '350px',
+                left: '50%',
+                transform: 'translate(-50%, 0)',
+                border: 'none',
+                padding: '5px',
+                backgroundColor: '#000',
+                '-webkit-border-radius': '10px',
+                '-moz-border-radius': '10px',
+                opacity: .95,
+                color: '#fff'
+            }
+        });
+    }
 
-  window.fbAsyncInit = function() {
-    FB.init({
-      appId      : '1729291490636063',
-      cookie     : true,  // enable cookies to allow the server to access
-                          // the session
-      xfbml      : true,  // parse social plugins on this page
-      version    : 'v2.5' // use graph api version 2.5
-    });
+    function unblockUI() {
+        $.unblockUI();
+    }
 
-    // Now that we've initialized the JavaScript SDK, we call
-    // FB.getLoginStatus().  This function gets the state of the
-    // person visiting this page and can return one of three states to
-    // the callback you provide.  They can be:
-    //
-    // 1. Logged into your app ('connected')
-    // 2. Logged into Facebook, but not your app ('not_authorized')
-    // 3. Not logged into Facebook and can't tell if they are logged into
-    //    your app or not.
-    //
-    // These three cases are handled in the callback function.
+    window.fbAsyncInit = function () {
+        customBlockUI();
+        FB.init({
+            appId: '980184545362030',
+            cookie: true,
+            xfbml: true,
+            version: 'v2.5'
+        });
 
-    FB.getLoginStatus(function(response) {
-      statusChangeCallback(response);
-    });
+        unblockUI();
+        FB.getLoginStatus(function (response) {
+            statusChangeCallback(response);
+        });
+    };
 
-  };
+    (function (d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s);
+        js.id = id;
+        js.src = "//connect.facebook.net/sk_SK/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
 
-  // Load the SDK asynchronously
-  (function(d, s, id) {
-    var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) return;
-    js = d.createElement(s); js.id = id;
-    js.src = "//connect.facebook.net/en_US/sdk.js";
-    fjs.parentNode.insertBefore(js, fjs);
-  }(document, 'script', 'facebook-jssdk'));
-
-  // Here we run a very simple test of the Graph API after login is
-  // successful.  See statusChangeCallback() for when this call is made.
-  function testAPI() {
-    console.log('Welcome!  Fetching your information.... ');
-    FB.api('/me', function(response) {
-      console.log('Successful login for: ' + response.name);
-      document.getElementById('status').innerHTML =
-              'Thanks for logging in, ' + response.name + '!';
-    });
-  }
+    function loginToWebApp() {
+        if(first) {
+            unblockUI();
+        } else {
+            customBlockUI();
+        }
+        FB.api('/me', function (response) {
+            $('#userinput').val(encodeURIComponent(response.name));
+            $("#userid").val(response.id);
+            if(first) {
+                $('#continueModal').openModal();
+                first = false;
+            } else {
+                $('#loginForm').submit();
+            }
+        });
+    }
 </script>
 
-<!--
-  Below we include the Login Button social plugin. This button uses
-  the JavaScript SDK to present a graphical Login button that triggers
-  the FB.login() function when clicked.
--->
+<div class="container">
+    <div class="row center-align">
+        <div class="col s12 card ">
+            <div class="card-content">
+                <div class="card-image">
+                    <div class="container">
+                        <img src="<c:url value="/resources/images/backround1.jpg"/>">
+                    </div>
+                </div>
 
-<fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
-</fb:login-button>
+                <div class="row">
+                    <div class="col s12 center card-title">
+                        <h4>Login</h4>
+                        <h5>Please login with your facebook account.</h5>
+                    </div>
 
-<div id="status">
+                    <div class="col s12 center">
+                        <div class="fb-login-button"
+                             data-max-rows="1"
+                             data-size="xlarge"
+                             data-show-faces="false"
+                             data-auto-logout-link="false"
+                             data-scope="public_profile,email"
+                             onlogin="loginToWebApp()"
+                        >
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hidden">
+                    <form action="<c:url value="/login"/>"
+                          method="post"
+                          id="loginForm">
+                        <input id="userinput" name="fbId" type="text" hidden>
+                        <input id="userid" name="user" type="text" hidden>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="continueModal" class="modal">
+    <div class="modal-content">
+        <h4>Already logged in</h4>
+        <p>We've detected, that you are already logged into your facebook account. Continue to dashboard?
+        Click outside this window to close.</p>
+    </div>
+    <div class="modal-footer">
+        <a href="javascript:$('#loginForm').submit()" class=" modal-action modal-close waves-effect waves-green btn-flat">Continue</a>
+    </div>
 </div>
 
 </body>

@@ -22,6 +22,5 @@
         <i class="material-icons right">send</i>
     </button>
 </form>
-<%--<h6 class="teal-text right" ><a href="<c:url value="/full"/>"> See full report >></a> </h6>--%>
 
 

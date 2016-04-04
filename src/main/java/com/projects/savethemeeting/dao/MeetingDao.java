@@ -3,6 +3,7 @@ package com.projects.savethemeeting.dao;
 import com.projects.savethemeeting.objectmodel.Meeting;
 import com.projects.savethemeeting.objectmodel.User;
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 
@@ -33,10 +34,10 @@ public class MeetingDao extends BaseDao<Meeting> {
         return result;
     }
 
-    public Meeting getLastMeeting() {
+    public Meeting getLastMeeting(long userId) {
         Meeting lastMeeting  = (Meeting)getCurrentSession()
-                .createCriteria(Meeting.class)
-                .addOrder(Order.desc("started"))
+                .createQuery("from Meeting m join m.users as u where u.user.fbID = :id order by m.started")
+                .setParameter("id", userId)
                 .setMaxResults(1)
                 .uniqueResult();
         return lastMeeting;
@@ -51,14 +52,14 @@ public class MeetingDao extends BaseDao<Meeting> {
         closeCurrentSessionwithTransaction();
     }
 
-    public List<Meeting> getLastMeetings(int number) {
-        Criteria criteria = getCurrentSession()
-                .createCriteria(Meeting.class)
-                .addOrder(Order.desc("started"));
+    public List<Meeting> getLastMeetings(int number, long userId) {
+        Query query = getCurrentSession()
+                .createQuery("from Meeting m join m.users as u where u.user.fbID = :id order by m.started")
+                .setParameter("id", userId);
         if(number != -1) {
-            criteria.setMaxResults(number);
+            query.setMaxResults(number);
         }
-        return criteria.list();
+        return query.list();
 
     }
 

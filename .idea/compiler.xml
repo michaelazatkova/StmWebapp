@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="AjcSettings">
-    <option name="ajcPath" value="C:\Users\Michaela\.m2\repository\org\aspectj\aspectjtools\1.6.9\aspectjtools-1.6.9.jar" />
+    <option name="ajcPath" value="$MAVEN_REPOSITORY$/org/aspectj/aspectjtools/1.6.9/aspectjtools-1.6.9.jar" />
     <option name="delegateToJavac" value="true" />
   </component>
   <component name="CompilerConfiguration">
@@ -23,8 +23,8 @@
         <processorPath useClasspath="true" />
       </profile>
       <profile default="false" name="Annotation profile for stmwebapp" enabled="true">
-        <sourceOutputDir name="target\generated-sources\annotations" />
-        <sourceTestOutputDir name="target\generated-test-sources\test-annotations" />
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
         <module name="stmwebapp" />

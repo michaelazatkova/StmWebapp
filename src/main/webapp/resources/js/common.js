@@ -45,6 +45,18 @@ $(function() {
         $('form.searchform').submit(function(event) {
             event.stopPropagation();
             event.preventDefault();
+        });
+
+        $('.logout-button').bind('click', function() {
+            FB.getLoginStatus(function (response) {
+                if(response.status === 'connected') {
+                    var accessToken = response.authResponse.accessToken;
+                    FB.logout(function(response) {
+                        console.info("Successfully logout from facebook...");
+                        location.href = "/logout";
+                    });
+                }
+            });
         })
     });
 });

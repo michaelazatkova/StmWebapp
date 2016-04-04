@@ -4,12 +4,17 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<sec:authentication var="user" property="principal"/>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
     <title>Save the meeting</title>
+
+    <link rel="icon" href="<c:url value="/resources/images/favicon.ico"/>"/>
 
     <!-- CSS  -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -23,6 +28,7 @@
     <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
     <script src="<c:url value="/resources/js/materialize.min.js"/>"></script>
     <script src="<c:url value="/resources/js/common.js"/>"></script>
+
     <script>
         SC.initialize({
             client_id: 'cb5ef3b1acde0f9998eafecfb2356678',
@@ -31,35 +37,51 @@
     </script>
 </head>
 <body>
-
 <script>
     window.fbAsyncInit = function () {
         FB.init({
-            appId: '1729291490636063',
-            cookie     : true,
+            appId: '980184545362030',
+            cookie: true,
             xfbml: true,
             version: 'v2.5'
+        });
+
+        FB.getLoginStatus(function (response) {
+            if (response.status === 'connected') {
+                var accessToken = response.authResponse.accessToken;
+            }
         });
     };
 
     (function (d, s, id) {
         var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) {
-            return;
-        }
+        if (d.getElementById(id)) return;
         js = d.createElement(s);
         js.id = id;
-        js.src = "//connect.facebook.net/en_US/sdk.js";
+        js.src = "//connect.facebook.net/sk_SK/sdk.js";
         fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));
 </script>
 
 <nav class="teal" role="navigation">
     <div class="nav-wrapper">
-        <a id="logo-container" href="<c:url value="/"/>" class="brand-logo">Save the meeting</a>
+        <a id="logo-container" href="<c:url value="/home"/>" class="brand-logo">Save the meeting</a>
         <ul class="right hide-on-med-and-down">
+            <li><a href="<c:url value="/home"/>" class="white-text"><i class="material-icons left">dashboard</i>Dashboard</a>
+            </li>
+
             <li><a href="<c:url value="/reports"/>" class="white-text"><i class="material-icons left">library_books</i>My
                 meeting reports</a></li>
+
+            <sec:authorize access="isAuthenticated()">
+                <li>
+                    <a href="#" class="white-text logout-button">
+                        <img width="32px" style="top: 50%; transform: translate(0, 33%)"
+                             src="<c:url value="/resources/images/facebook-128.png"/>">
+                        Logout
+                    </a>
+                </li>
+            </sec:authorize>
         </ul>
     </div>
 </nav>
@@ -95,7 +117,7 @@
     </div>
     <div class="footer-copyright">
         <div class="container">
-            Made by Michaela Zaťková
+            Created by Michaela Zaťková
         </div>
     </div>
 </footer>

@@ -8,9 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,19 +29,35 @@ public class MeetingController {
     @Autowired
     private UserDao userDao;
 
-    @RequestMapping("/")
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
     public ModelAndView login() {
-        ModelAndView modelAndView = new ModelAndView("login");
-        return modelAndView;
+        return new ModelAndView("login");
+    }
+
+    @RequestMapping("/")
+    public String home() {
+        return "redirect:/home";
     }
 
     @RequestMapping("/home")
-    public ModelAndView welcome() {
+    public ModelAndView welcome(HttpServletRequest request) {
+        // parse userId
+        long userId = Long.parseLong(request.getUserPrincipal().getName());
+
+        // fetch data from db
         meetingDao.openCurrentSessionwithTransaction();
-        Meeting lastMeeting = meetingDao.getLastMeeting();
-        List<User> participants = userDao.getUsers(lastMeeting);
-        List<Meeting> meetings = meetingDao.getLastMeetings(10);
+        Meeting lastMeeting = meetingDao.getLastMeeting(userId);
+        List<User> participants = new ArrayList<User>();
+        List<Meeting> meetings = new ArrayList<Meeting>();
+        if(lastMeeting != null) {
+            participants = userDao.getUsers(lastMeeting);
+            meetings = meetingDao.getLastMeetings(10, userId);
+        } else {
+            lastMeeting = new Meeting();
+        }
         meetingDao.closeCurrentSessionwithTransaction();
+
+        // add them to view
         ModelAndView modelAndView = new ModelAndView("index");
         modelAndView.addObject("lastMeeting", lastMeeting);
         modelAndView.addObject("participants", participants);
@@ -48,11 +67,17 @@ public class MeetingController {
     }
 
     @RequestMapping("/full")
-    public ModelAndView fullReport() {
+    public ModelAndView fullReport(HttpServletRequest request) {
+        // parse userId
+        long userId = Long.parseLong(request.getUserPrincipal().getName());
+
+        // fetch data from db
         meetingDao.openCurrentSessionwithTransaction();
-        Meeting lastMeeting = meetingDao.getLastMeeting();
+        Meeting lastMeeting = meetingDao.getLastMeeting(userId);
         List<User> participants = userDao.getUsers(lastMeeting);
         meetingDao.closeCurrentSessionwithTransaction();
+
+        // add them to view
         ModelAndView modelAndView = new ModelAndView("full");
         modelAndView.addObject("lastMeeting", lastMeeting);
         modelAndView.addObject("participants", participants);
@@ -62,10 +87,13 @@ public class MeetingController {
 
     @RequestMapping("/full/{id}")
     public ModelAndView reports(@PathVariable long id) {
+        // fetch meetings from db
         meetingDao.openCurrentSessionwithTransaction();
         Meeting lastMeeting = meetingDao.getMeeting(id);
         List<User> participants = userDao.getUsers(lastMeeting);
         meetingDao.closeCurrentSessionwithTransaction();
+
+        // add it to view
         ModelAndView modelAndView = new ModelAndView("full");
         modelAndView.addObject("lastMeeting", lastMeeting);
         modelAndView.addObject("participants", participants);
@@ -74,17 +102,24 @@ public class MeetingController {
     }
 
     @RequestMapping("/reports")
-    public ModelAndView reports() {
-        ModelAndView modelAndView = new ModelAndView("reports");
+    public ModelAndView reports(HttpServletRequest request) {
+        // parse userId
+        long userId = Long.parseLong(request.getUserPrincipal().getName());
+
+        // fetch data from db
         meetingDao.openCurrentSessionwithTransaction();
-        List<Meeting> meetings = meetingDao.getLastMeetings(-1);
+        List<Meeting> meetings = meetingDao.getLastMeetings(-1, userId);
         Map<Meeting, List<User>> resultMap = new HashMap<Meeting, List<User>>();
         for(Meeting meeting : meetings) {
             List<User> participants = userDao.getUsers(meeting);
             resultMap.put(meeting, participants);
         }
         meetingDao.closeCurrentSessionwithTransaction();
+
+        // add them to view
+        ModelAndView modelAndView = new ModelAndView("reports");
         modelAndView.addObject("resultMap", resultMap);
+
         return modelAndView;
     }
 

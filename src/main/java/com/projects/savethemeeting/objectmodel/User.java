@@ -11,8 +11,7 @@ import java.util.List;
 @Entity
 @Table(name = "users", schema = "public")
 public class User implements Serializable {
-
-    private static final long serialVersionUID = -4619148560389902972L;
+    private static final long serialVersionUID = -7879888870758729313L;
 
     @Id
     @Column(name = "id_user")
@@ -20,19 +19,16 @@ public class User implements Serializable {
 
     @Column
     private String name;
+
     @Column
     private String email;
 
+    @ManyToOne
+    @JoinColumn(name = "id_user_role", referencedColumnName = "id_user_role")
+    private UserRole idUserRole;
+
     @OneToMany(mappedBy = "user")
     private List<UserOnMeeting> meetings = new ArrayList<UserOnMeeting>();
-
-    public User() {
-    }
-
-    public User(String name, String email) {
-        this.name = name;
-        this.email = email;
-    }
 
     public long getFbID() {
         return fbID;
@@ -50,7 +46,6 @@ public class User implements Serializable {
         this.name = name;
     }
 
-
     public String getEmail() {
         return email;
     }
@@ -67,6 +62,13 @@ public class User implements Serializable {
         this.meetings = meetings;
     }
 
+    public UserRole getIdUserRole() {
+        return idUserRole;
+    }
+
+    public void setIdUserRole(UserRole idUserRole) {
+        this.idUserRole = idUserRole;
+    }
 
     @Override
     public boolean equals(Object o) {
