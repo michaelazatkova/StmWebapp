@@ -163,11 +163,4 @@ public class RestApiController {
             return "FAILED";
         }
     }
-
-    @RequestMapping(value="/skuska",method = RequestMethod.GET)
-    public void skuska() {
-    Meeting lastMeeting = meetingDao.getLastMeeting();
-        List<User> users = userDao.getUsers(lastMeeting);
-
-    }
 }
