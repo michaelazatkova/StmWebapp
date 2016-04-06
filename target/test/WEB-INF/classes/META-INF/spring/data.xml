@@ -62,6 +62,7 @@
                 <value>com.projects.savethemeeting.objectmodel.Record</value>
                 <value>com.projects.savethemeeting.objectmodel.PointOfInterest</value>
                 <value>com.projects.savethemeeting.objectmodel.UserRole</value>
+                <value>com.projects.savethemeeting.objectmodel.Comment</value>
             </list>
         </property>
     </bean>

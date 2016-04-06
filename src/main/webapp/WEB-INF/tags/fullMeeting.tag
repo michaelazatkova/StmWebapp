@@ -14,7 +14,7 @@
 <br>
 <span class="teal-text chip" >Duration </span> <h6 class="teal-text darken3 margin2">${meeting.formatedDuration}</h6>
 
-<div id="player" class="teal" data="${meeting.idMeeting}">
+<div id="player" class="teal" data="${meeting.idMeeting}" token="${meeting.recordToken}">
 </div>
 <br>
 <div class="row">

@@ -4,7 +4,7 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 
-<jsp:useBean id="lastMeeting" class="com.projects.savethemeeting.objectmodel.Meeting" scope="request"/>
+<jsp:useBean id="meeting" class="com.projects.savethemeeting.objectmodel.Meeting" scope="request"/>
 <jsp:useBean id="participants" type="java.util.List" class="java.util.ArrayList" scope="request"/>
 <jsp:useBean id="lastMeetings" type="java.util.List" scope="request"/>
 
@@ -19,8 +19,8 @@
                             <h2 class="center black-text margin1"><i class="material-icons">description</i></h2>
 
                             <c:choose>
-                                <c:when test="${lastMeeting.idMeeting != null and not empty participants}">
-                                    <p class="light"><t:lastMeeting lastMeeting="${lastMeeting}"
+                                <c:when test="${meeting.idMeeting != null and not empty participants}">
+                                    <p class="light"><t:lastMeeting meeting="${meeting}"
                                                                     participants="${participants}"/></p>
                                 </c:when>
                                 <c:otherwise>

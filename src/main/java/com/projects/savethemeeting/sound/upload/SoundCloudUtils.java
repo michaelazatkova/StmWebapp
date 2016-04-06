@@ -23,23 +23,7 @@ public class SoundCloudUtils extends Thread {
             @Override
             public void run() {
                 String trackName = (new File(path)).getParentFile().getName();
-                boolean doUpload = true;
-                ArrayList<Track> tracks = soundcloud.getMeTracks();
 
-                for (Track t: tracks) {
-                    if (t.getTitle().equals(String.valueOf(trackName))) {
-                        doUpload = false;
-                        System.out.println("Meeting sound already exists on SC. "+trackName+" will be deleted first.");
-                       boolean deleted = soundcloud.deleteTrack(t.getId());
-                        if (deleted)  {
-                            System.out.println(trackName+" has been successfully deleted from SQ");
-                            doUpload = true;
-                        }
-                        else System.out.println("Unable to delete "+trackName+" from SC");
-                    }
-                }
-
-                if (doUpload) {
                     System.out.println("Uploading track " + trackName + " to SOUNDCLOUD....");
                     Track track = new Track();
                     track.setFile(path);
@@ -56,7 +40,6 @@ public class SoundCloudUtils extends Thread {
                     }
                     System.out.println("Upload completed....");
                 }
-            }
         };
         upload.run();
 

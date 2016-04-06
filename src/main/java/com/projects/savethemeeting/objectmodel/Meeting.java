@@ -25,6 +25,7 @@ public class Meeting implements Serializable, Comparable{
         this.name = meetingInfo.getMeetingName();
         this.started = Util.getTimestampFromString(meetingInfo.getStarted());
         this.duration = meetingInfo.getDuration();
+        this.recordToken = 1;
     }
 
     public Meeting() {
@@ -40,6 +41,9 @@ public class Meeting implements Serializable, Comparable{
     private Timestamp started;
     @Column
     private long duration;
+
+    @Column
+    private long recordToken;
 
     @OneToMany(mappedBy = "meeting")
     private List<UserOnMeeting> users = new ArrayList<UserOnMeeting>();
@@ -85,6 +89,14 @@ public class Meeting implements Serializable, Comparable{
         this.users = users;
     }
 
+    public long getRecordToken() {
+        return recordToken;
+    }
+
+    public void setRecordToken(long recordToken) {
+        this.recordToken = recordToken;
+    }
+
     public String getFormatedDuration() {
         long duration =  getDuration() / 1000; //in seconds
         int hours = (int) (duration / 3600);
@@ -100,13 +112,6 @@ public class Meeting implements Serializable, Comparable{
             return ((Meeting) o).getStarted().compareTo(this.getStarted());
         }
         return -1;
-    }
-
-    public static class MeetingComparator implements Comparator<Meeting> {
-        @Override
-        public int compare(Meeting o1, Meeting o2) {
-            return o1.getStarted().compareTo(o2.getStarted());
-        }
     }
 
     @Override

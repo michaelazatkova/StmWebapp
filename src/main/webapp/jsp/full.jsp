@@ -19,7 +19,6 @@
                     <div class="col s12 m12">
                         <div class="icon-block grey lighten-4">
                             <h2 class="center black-text margin1"><i class="material-icons">description</i></h2>
-
                             <p class="light"><t:fullMeeting meeting="${meeting}" participants="${participants}" comments="${comments}" actualUser="${actualUser}"/></p>
                         </div>
                     </div>

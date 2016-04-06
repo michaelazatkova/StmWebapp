@@ -14,10 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by Michaela on 15.03.2016.
@@ -96,16 +93,16 @@ public class MeetingController {
     public ModelAndView reports(@PathVariable long id, HttpServletRequest request) {
         long userId = Long.parseLong(request.getUserPrincipal().getName());
         // fetch meetings from db
-        meetingDao.openCurrentSession();
+        meetingDao.openCurrentSessionwithTransaction();
         Meeting lastMeeting = meetingDao.getMeeting(id);
         List<User> participants = userDao.getUsers(lastMeeting);
         List<Comment> comments = meetingDao.getComments(lastMeeting);
         User actualUser = userDao.getUser(userId);
-        meetingDao.closeCurrentSession();
+        meetingDao.closeCurrentSessionwithTransaction();
 
         // add it to view`
         ModelAndView modelAndView = new ModelAndView("full");
-        modelAndView.addObject("lastMeeting", lastMeeting);
+        modelAndView.addObject("meeting", lastMeeting);
         modelAndView.addObject("participants", participants);
         modelAndView.addObject("comments", comments);
         modelAndView.addObject("actualUser", actualUser);
@@ -121,7 +118,7 @@ public class MeetingController {
         // fetch data from db
         meetingDao.openCurrentSession();
         List<Meeting> meetings = meetingDao.getLastMeetings(-1, userId);
-        Map<Meeting, List<User>> resultMap = new HashMap<Meeting, List<User>>();
+        Map<Meeting, List<User>> resultMap = new TreeMap<Meeting, List<User>>();
         for (Meeting meeting : meetings) {
             List<User> participants = userDao.getUsers(meeting);
             resultMap.put(meeting, participants);

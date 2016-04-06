@@ -3,7 +3,8 @@ $(function () {
         $('.parallax').parallax();
 
         if ($('#player').length > 0) {
-            var url = 'https://soundcloud.com/user-790524602/' + $('#player').attr('data') + '-1';
+            var url = 'https://soundcloud.com/user-790524602/' + $('#player').attr('data') + '-' + $('#player').attr('token');
+            console.info(url);
             SC.oEmbed(url, {
                 show_user: false,
                 sharing: false,
