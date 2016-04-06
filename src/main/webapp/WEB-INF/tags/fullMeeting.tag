@@ -4,6 +4,8 @@
 
 <%@attribute name="meeting" type="com.projects.savethemeeting.objectmodel.Meeting" required="true" %>
 <%@attribute name="participants" type="java.util.List<com.projects.savethemeeting.objectmodel.User>" required="true" %>
+<%@attribute name="comments" type="java.util.List<com.projects.savethemeeting.objectmodel.Comment>" required="true" %>
+<%@attribute name="actualUser" type="com.projects.savethemeeting.objectmodel.User" required="true" %>
 
 <h4 class="center teal-text">Last meeting report preview</h4>
 <h5 class="teal-text " >${meeting.name}</h5>
@@ -17,7 +19,7 @@
 <br>
 <div class="row">
     <div class="col s9">
-    <span> COMMENTS</span>
+    <t:comments comments="${comments}"/>
     </div>
     <div class="col s3"
 <t:participantsTable participants="${participants}"/>

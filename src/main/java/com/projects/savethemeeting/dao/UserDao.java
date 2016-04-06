@@ -50,4 +50,9 @@ public class UserDao extends  BaseDao<User> {
         return query.list();
 
     }
+
+    public User getUser( long uId) {
+        User found = (User)getCurrentSession().get(User.class,uId);
+        return found;
+    }
 }

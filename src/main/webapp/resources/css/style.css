@@ -53,6 +53,14 @@ p {
     overflow: auto !important;
 }
 
+.reply {
+    cursor: pointer;
+}
+
+.close-comment {
+    cursor: pointer;
+}
+
 .parallax-container {
     min-height: 380px;
     line-height: 0;

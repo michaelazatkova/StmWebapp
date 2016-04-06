@@ -2,6 +2,7 @@ package com.projects.savethemeeting.controller;
 
 import com.projects.savethemeeting.dao.MeetingDao;
 import com.projects.savethemeeting.dao.UserDao;
+import com.projects.savethemeeting.objectmodel.Comment;
 import com.projects.savethemeeting.objectmodel.Meeting;
 import com.projects.savethemeeting.objectmodel.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +50,7 @@ public class MeetingController {
         Meeting lastMeeting = meetingDao.getLastMeeting(userId);
         List<User> participants = new ArrayList<User>();
         List<Meeting> meetings = new ArrayList<Meeting>();
-        if(lastMeeting != null) {
+        if (lastMeeting != null) {
             participants = userDao.getUsers(lastMeeting);
             meetings = meetingDao.getLastMeetings(10, userId);
         } else {
@@ -59,9 +60,9 @@ public class MeetingController {
 
         // add them to view
         ModelAndView modelAndView = new ModelAndView("index");
-        modelAndView.addObject("lastMeeting", lastMeeting);
+        modelAndView.addObject("meeting", lastMeeting);
         modelAndView.addObject("participants", participants);
-        modelAndView.addObject("lastMeetings",meetings);
+        modelAndView.addObject("lastMeetings", meetings);
 
         return modelAndView;
     }
@@ -72,31 +73,42 @@ public class MeetingController {
         long userId = Long.parseLong(request.getUserPrincipal().getName());
 
         // fetch data from db
-        meetingDao.openCurrentSessionwithTransaction();
+        meetingDao.openCurrentSession();
         Meeting lastMeeting = meetingDao.getLastMeeting(userId);
         List<User> participants = userDao.getUsers(lastMeeting);
-        meetingDao.closeCurrentSessionwithTransaction();
+//        meetingDao.createComment(lastMeeting.getIdMeeting(),userId,"another commen!",null);
+        List<Comment> comments = meetingDao.getComments(lastMeeting);
+
+        User actualUser = userDao.getUser(userId);
+        meetingDao.closeCurrentSession();
 
         // add them to view
         ModelAndView modelAndView = new ModelAndView("full");
-        modelAndView.addObject("lastMeeting", lastMeeting);
+        modelAndView.addObject("meeting", lastMeeting);
         modelAndView.addObject("participants", participants);
+        modelAndView.addObject("comments", comments);
+        modelAndView.addObject("actualUser", actualUser);
 
         return modelAndView;
     }
 
     @RequestMapping("/full/{id}")
-    public ModelAndView reports(@PathVariable long id) {
+    public ModelAndView reports(@PathVariable long id, HttpServletRequest request) {
+        long userId = Long.parseLong(request.getUserPrincipal().getName());
         // fetch meetings from db
-        meetingDao.openCurrentSessionwithTransaction();
+        meetingDao.openCurrentSession();
         Meeting lastMeeting = meetingDao.getMeeting(id);
         List<User> participants = userDao.getUsers(lastMeeting);
-        meetingDao.closeCurrentSessionwithTransaction();
+        List<Comment> comments = meetingDao.getComments(lastMeeting);
+        User actualUser = userDao.getUser(userId);
+        meetingDao.closeCurrentSession();
 
-        // add it to view
+        // add it to view`
         ModelAndView modelAndView = new ModelAndView("full");
         modelAndView.addObject("lastMeeting", lastMeeting);
         modelAndView.addObject("participants", participants);
+        modelAndView.addObject("comments", comments);
+        modelAndView.addObject("actualUser", actualUser);
 
         return modelAndView;
     }
@@ -107,15 +119,15 @@ public class MeetingController {
         long userId = Long.parseLong(request.getUserPrincipal().getName());
 
         // fetch data from db
-        meetingDao.openCurrentSessionwithTransaction();
+        meetingDao.openCurrentSession();
         List<Meeting> meetings = meetingDao.getLastMeetings(-1, userId);
         Map<Meeting, List<User>> resultMap = new HashMap<Meeting, List<User>>();
-        for(Meeting meeting : meetings) {
+        for (Meeting meeting : meetings) {
             List<User> participants = userDao.getUsers(meeting);
             resultMap.put(meeting, participants);
         }
         List<String> userNames = userDao.getAllUserNames();
-        meetingDao.closeCurrentSessionwithTransaction();
+        meetingDao.closeCurrentSession();
 
         // add them to view
         ModelAndView modelAndView = new ModelAndView("reports");
