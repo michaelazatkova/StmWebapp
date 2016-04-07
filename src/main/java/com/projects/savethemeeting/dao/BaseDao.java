@@ -35,7 +35,7 @@ public abstract class BaseDao<T> extends HibernateDaoSupport {
     }
 
     public Session getCurrentSession() {
-        return currentSession;
+        return getSessionFactory().getCurrentSession();
     }
 
     public void setCurrentSession(Session currentSession) {

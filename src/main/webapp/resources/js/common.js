@@ -16,7 +16,7 @@ $(function () {
             });
         }
 
-        $(document).on('click', '.material-icons[text=close]', function() {
+        $(document).on('click.chip', '.chip .material-icons', function (e) {
             doFilter();
         });
 
@@ -74,19 +74,17 @@ $(function () {
 });
 
 function showAll() {
-    $('.meeting-vrapper').show();
+    $('.meeting-wrapper').show();
 }
 
 function doFilter() {
     showAll();
 
     var text = $('#search').val().toLowerCase();
-
+    console.info("DO FILTER");
     $('.meeting-name').each(function (index, item) {
-        if ($(this).is(':visible') && $(this).text().toLocaleLowerCase().indexOf(text) === -1) {
+        if ($(this).text().toLocaleLowerCase().indexOf(text) === -1) {
             $(this).parent().hide();
-        } else {
-            $(this).parent().show();
         }
     });
 

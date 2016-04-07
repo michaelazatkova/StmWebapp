@@ -106,15 +106,12 @@
 
 <jsp:doBody/>
 
-<div class="parallax-container valign-wrapper">
+<div class="parallax-container">
     <div class="parallax"><img src="<c:url value="/resources/images/backround2.jpg"/>"
                                alt="Unsplashed background img 2"></div>
 </div>
 
 <footer class="page-footer teal">
-    <div class="container">
-
-    </div>
     <div class="footer-copyright">
         <div class="container">
             Created by Michaela Zaťková

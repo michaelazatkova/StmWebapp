@@ -4,8 +4,8 @@
 
 <%@attribute name="comments" type="java.util.List<com.projects.savethemeeting.objectmodel.Comment>" required="true" %>
 
-<h5 class="grey-text darken-2">Comments</h5>
-<span class="reply" title="New comment"><img width="30px" height="30px" src="<c:url value="/resources/images/comment.png"/>" alt="reply" ></span>
+<h5 class="grey-text darken-2 center">Comments</h5>
+<span class="reply" ><i class="material-icons " >playlist_add</i> New comment</span>
 <ul class="collection">
     <c:forEach items="${comments}" var="comment">
         <c:if test="${comment.parentComment==null}">

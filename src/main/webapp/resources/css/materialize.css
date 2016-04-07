@@ -3345,11 +3345,15 @@ nav ul a span.badge {
 }
 
 .margin2 {
-    margin-left: 20px;
+    margin-left: 30px;
 }
 
 .margin3 {
     margin-left: 55px;
+}
+
+.margin4 {
+    margin-top: 50px !important;
 }
 
 .right {

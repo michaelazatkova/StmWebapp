@@ -13,28 +13,64 @@
     <jsp:body>
         <div class="container">
             <div class="section">
-
                 <!--   Icon Section   -->
                 <div class="row">
                     <div class="col s12 m12">
                         <div class="icon-block grey lighten-4">
                             <h2 class="center black-text margin1"><i class="material-icons">description</i></h2>
-                            <p class="light"><t:fullMeeting meeting="${meeting}" participants="${participants}" comments="${comments}" actualUser="${actualUser}"/></p>
+
+                            <p class="light "><t:fullMeeting meeting="${meeting}" actualUser="${actualUser}"/></p>
                         </div>
                     </div>
                 </div>
 
+            </div>
+            <div class="section">
+                <!--   Icon Section   -->
+                <div class="row">
+                    <div class="col s12 m8">
+                        <div class="icon-block grey lighten-4">
+                            <h2 class="center black-text margin1"><img class="material-icons" width="50px"
+                                                                       src="<c:url value="/resources/images/comment.png"/>"
+                                                                       alt="reply"></h2>
+
+                            <c:choose>
+                                <c:when test="${not empty comments}">
+                                    <t:comments comments="${comments}"/>
+                                </c:when>
+                                <c:otherwise>
+                                    <p class="light"><h4 class="center">No one has commented yet!</h4></p>
+                                </c:otherwise>
+                            </c:choose>
+                        </div>
+                    </div>
+
+                    <div class="col s12 m4">
+                        <div class="icon-block grey lighten-4">
+                            <h2 class="center black-text margin1"><i class="material-icons">view_list</i></h2>
+
+                            <c:choose>
+                                <c:when test="${not empty participants}">
+                                    <t:participantsTable participants="${participants}"/>
+                                </c:when>
+                                <c:otherwise>
+                                    <p class="light"><h4 class="center">Nothing reported!</h4></p>
+                                </c:otherwise>
+                            </c:choose>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
         <script>
             $(function () {
                 $('.reply').bind('click', function () {
-                    if ($('#comment-field').length>0) {
-                        return;
+                    if ($('#comment-field').length > 0) {
+                        $('#comment-field').parent().remove();
                     }
                     var commentId = $(this).attr("id");
-                    var comment1 = $('<li class="collection-item avatar">');
+                    var comment1 = $('<li class="collection-item avatar" id="all-comment">');
                     var comment2 = $('<img src="<c:url value="/resources/images/person-icon.png"/>" alt="" class="circle">');
                     var comment3 = $('<h4 class="title">${actualUser.name} <img class="right close-comment" width="20px" height="20px" src="<c:url value="/resources/images/close.png"/>" alt="reply" ></h4>');
                     var comment4 = $(' <div class="input-field">');
@@ -49,15 +85,18 @@
 
                     $(this).next('.collection').append(comment1);
 
-                    $('.close-comment').bind('click', function() {
-                       $(this).parent().parent().remove() ;
+                    $('body').scrollTo('#all-comment');
+                    $('#comment-field').focus();
+
+                    $('.close-comment').bind('click', function () {
+                        $(this).parent().parent().remove();
                     });
 
 
-                    $('#comment-field').keyup(function(e){
+                    $('#comment-field').keyup(function (e) {
                         var input = $(this);
                         if (e.keyCode == 13) { //enter
-                            input.attr('disabled','disabled');
+                            input.attr('disabled', 'disabled');
                             $('.close-comment').hide();
                             $.ajax({
                                 url: '/api/comment',
@@ -69,11 +108,11 @@
                                     text: $(this).val(),
                                     pid: commentId
                                 }
-                            }).done(function() {
+                            }).done(function () {
 //                                location.reload();
-                                input.replaceWith('<p>'+input.val()+'</p>');
+                                input.replaceWith('<p>' + input.val() + '</p>');
                                 $('.close-comment').remove();
-                            }).fail(function() {
+                            }).fail(function () {
                                 console.error("Error while adding new comment :(");
                                 input.removeAttr('disabled');
                                 $('.close-comment').show();
